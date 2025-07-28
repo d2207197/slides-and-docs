@@ -9,11 +9,12 @@ This guide has been split into multiple sections for easier navigation and maint
    - Why this matters for Taboola
    - Learning objectives
 
-2. [Application vs Library: Understanding the Distinction](02-application-vs-library.md)
-   - Fundamental differences
-   - Application characteristics
-   - Library characteristics
-   - Real-world examples at Taboola
+2. [Application vs Framework vs Library: Understanding the Fundamental Differences](02-application-framework-library.md)
+   - The core distinction: Who controls whom?
+   - Testing requirements and approaches
+   - Examples from Python and Java worlds
+   - Hybrid tools that are both library and application
+   - Dependency management implications
 
 3. [Production Software Architecture Layers](03-production-software-architecture.md)
    - The pyramid of responsibility

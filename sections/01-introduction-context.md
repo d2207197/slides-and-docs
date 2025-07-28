@@ -10,7 +10,12 @@ At Taboola, we have diverse teams:
 ## Learning Objectives
 
 By the end of this presentation, you will understand:
-- How to structure Python projects for production
-- The responsibility of different architectural layers
-- Modern Python tooling and best practices
-- How to transition from "script" mentality to "production software" mindset
+- **Environment Control**: How different Python tool types (libraries, frameworks, applications) control their execution environments
+- **Dependency Strategy**: Why environment control level determines dependency management flexibility
+- **Testing Responsibility**: How testing requirements drive different version constraint strategies
+- **Python Environment Stack**: How to manage the complete System → Python → Libraries → Dependencies hierarchy
+- **Production Mindset**: Transition from "script mentality" to production software architecture
+
+## Core Presentation Theme
+
+This presentation focuses on **environment control as the fundamental driver of Python dependency management**. Understanding who controls what in the Python ecosystem is crucial for making effective architectural decisions and managing complex production environments.
