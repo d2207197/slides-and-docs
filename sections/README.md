@@ -16,10 +16,10 @@ This guide has been split into multiple sections for easier navigation and maint
    - Hybrid tools that are both library and application
    - Dependency management implications
 
-3. [Production Software Architecture Layers](03-production-software-architecture.md)
-   - The pyramid of responsibility
-   - Layer responsibilities
-   - Twelve-Factor App principles (Python context)
+3. [Environment Architecture Layers](03-environment-architecture-layers.md)
+   - Complete environment stack (7 layers)
+   - Hardware to application layer breakdown
+   - Environment control cascade and practical implications
 
 4. [Dependency Management Strategy](04-dependency-management.md)
    - The lock file revolution (2024-2025)
