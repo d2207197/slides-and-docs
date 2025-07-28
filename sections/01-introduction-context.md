@@ -11,10 +11,11 @@ At Taboola, we have diverse teams:
 
 By the end of this presentation, you will understand:
 - **Environment Control**: How different Python tool types (libraries, frameworks, applications) control their execution environments
-- **Dependency Strategy**: Why environment control level determines dependency management flexibility
-- **Testing Responsibility**: How testing requirements drive different version constraint strategies
-- **Python Environment Stack**: How to manage the complete System → Python → Libraries → Dependencies hierarchy
-- **Production Mindset**: Transition from "script mentality" to production software architecture
+- **Environment Architecture**: The 6-layer stack from hardware to dependencies and how each layer offers different control levels
+- **Flexibility Strategies**: Why libraries maximize flexibility while applications minimize it, and how this drives dependency decisions
+- **Layer Separation**: Benefits of using the right tool for the right layer, and problems when layers are mixed
+- **Tool Specialization**: How to choose appropriate tools for each environment layer
+- **Production Mindset**: Transition from "script mentality" to understanding production software architecture
 
 ## Core Presentation Theme
 

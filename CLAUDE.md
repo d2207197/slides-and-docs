@@ -23,7 +23,7 @@ python-packaging-good-practices/
 │   ├── README.md                      # Table of contents for sections
 │   ├── 01-introduction-context.md     # Why this matters, learning objectives
 │   ├── 02-application-framework-library.md  # Core environment control concepts
-│   ├── 03-production-software-architecture.md
+│   ├── 03-environment-architecture-layers.md  # 6-layer environment stack
 │   ├── 04-dependency-management.md
 │   ├── 05-development-practices.md
 │   ├── 06-build-systems.md
@@ -41,6 +41,7 @@ python-packaging-good-practices/
 ### File Descriptions
 
 - **sections/02-application-framework-library.md** - **CORE SECTION**: Establishes environment control as the fundamental concept driving dependency management strategies. This is the foundation for all subsequent content.
+- **sections/03-environment-architecture-layers.md** - **ARCHITECTURE SECTION**: 6-layer environment stack from hardware to dependencies, shows how different project types (Library/Framework/Application) control each layer with different flexibility strategies
 - **sections/01-introduction-context.md** - Updated to emphasize environment control theme and learning objectives
 - **sections/README.md** - Navigation guide for all presentation sections
 - **resources/** - Source materials that informed the presentation development
@@ -65,10 +66,12 @@ python-packaging-good-practices/
 - Testing responsibility explains why applications need strict version control
 - This foundation enables understanding of the complete Python environment stack
 
-### Modern Python Environment Stack (ROADMAP TO SUBSEQUENT CONTENT)
-- System level → Python runtime → Virtual environments → Project config → Package managers → Lock files
-- Understanding which tools control which layers and their interactions
-- How environment control principles apply at each stack level
+### Environment Architecture Layers (ESTABLISHED IN SECTION 03)
+- **6-Layer Stack**: Hardware → OS → System Packages → Runtime → Isolation → Dependencies & Config
+- **Flexibility Strategies**: Libraries (🌐 Maximum) → Frameworks (🔸 Moderate) → Applications (🎯 Minimal)
+- **Layer Separation Benefits**: Specialization, Change Frequency isolation, Shared Usage optimization
+- **Tool Specialization**: Right tool for right layer prevents cross-layer anti-patterns
+- **Docker Cross-Layer Warning**: Avoid using single tools to manage multiple layers
 
 ### Tool Specialization and Performance
 - **uv**: 10-100x faster, integrated Python management
@@ -112,12 +115,19 @@ A comprehensive presentation that helps Taboola engineers understand:
 - Visual mermaid diagram showing application/framework/library containment relationships  
 - Comprehensive table linking environment control → dependency strategy → testing responsibility
 - Clear progression from shallow concepts to deep implementation details
-- Foundation established for subsequent sections on Python environment management
+
+**Architecture Layer Framework Established** in `sections/03-environment-architecture-layers.md`:
+- **6-Layer Environment Stack**: Hardware → OS → System Packages → Runtime → Isolation → Dependencies & Config
+- **Flexibility Analysis**: Comprehensive table showing Library/Framework/Application control strategies per layer
+- **Layer Separation Value**: Benefits (Specialization, Change Frequency, Shared Usage) and problems without separation
+- **Tool Specialization Guidelines**: Right tool for right layer with anti-pattern examples
+- **Docker Cross-Layer Warnings**: Comprehensive analysis of cross-layer tool overuse problems
+- **Presentation-Ready Format**: Concise insights and practical guidance suitable for slides
 
 **Key Sections Updated**:
 - `sections/01-introduction-context.md`: Updated learning objectives to emphasize environment control theme
 - `sections/README.md`: Navigation guide for all presentation sections
-- `CLAUDE.md`: Updated to reflect core themes and presentation focus
+- `CLAUDE.md`: Updated to reflect core themes and architecture layer foundation
 
 **Ready for**: 
 - Development of subsequent sections building on environment control foundation
