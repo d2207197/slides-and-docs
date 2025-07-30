@@ -17,24 +17,30 @@ This guide has been split into multiple sections for easier navigation and maint
    - Dependency management implications
 
 3. [Environment Architecture Layers](03-environment-architecture-layers.md)
-   - Complete environment stack (7 layers)
-   - Hardware to application layer breakdown
+   - Complete environment stack (6 layers)
+   - Hardware to dependencies layer breakdown
    - Environment control cascade and practical implications
 
-4. [Dependency Management Strategy](04-dependency-management.md)
+4. [Python Environment Tools: Cross-Layer Control](04-python-environment-tools.md)
+   - Multi-layer control tools (Docker, uv, conda, poetry)
+   - Tool control scope across environment layers
+   - Java tools comparison
+   - Tool combination strategies and selection guide
+
+5. [Dependency Management Strategy](05-dependency-management.md)
    - The lock file revolution (2024-2025)
    - Modern dependency hierarchy - six layers
    - System, application, and library dependencies
    - Dependency resolution examples
 
-5. [Development Practices & Quality Assurance](05-development-practices.md)
+6. [Development Practices & Quality Assurance](06-development-practices.md)
    - Code quality pyramid
    - Code formatting
    - Type checking with mypy
    - Testing with pytest
    - Testing strategy
 
-6. [Build Systems & Package Management](06-build-systems.md)
+7. [Build Systems & Package Management](07-build-systems.md)
    - pyproject.toml: The standardization revolution
    - Modern Python build ecosystem
    - Build backend comparison
@@ -42,7 +48,7 @@ This guide has been split into multiple sections for easier navigation and maint
    - Source layout: The modern standard
    - AI-friendly documentation
 
-7. [Module & Subpackage Design](07-module-subpackage-design.md)
+8. [Module & Subpackage Design](08-module-subpackage-design.md)
    - Module design principles
    - Package structure patterns
    - __init__.py design patterns
@@ -50,24 +56,24 @@ This guide has been split into multiple sections for easier navigation and maint
    - Common anti-patterns to avoid
    - Module design checklist
 
-8. [Environment Management](08-environment-management.md)
+9. [Environment Management](09-environment-management.md)
    - Python version management
    - pyenv: Python version management
    - Virtual environment strategies
    - Conda: Critical scale limitations (2024-2025 update)
    - Docker for Python applications
 
-9. [Deployment & Distribution](09-deployment-distribution.md)
-   - Distribution strategies
-   - On-premise environment considerations
-   - CI/CD pipeline example
+10. [Deployment & Distribution](10-deployment-distribution.md)
+    - Distribution strategies
+    - On-premise environment considerations
+    - CI/CD pipeline example
 
-10. [Skill Levels: From Beginner to Expert](10-skill-levels.md)
+11. [Skill Levels: From Beginner to Expert](11-skill-levels.md)
     - Application developer levels
     - Library developer levels
     - Skill progression matrix
 
-11. [Practical Guidelines & Recommendations](11-practical-guidelines.md)
+12. [Practical Guidelines & Recommendations](12-practical-guidelines.md)
     - Common anti-patterns and solutions (2024-2025)
     - Balancing flexibility with reproducibility
     - For data scientists & ML engineers
@@ -75,7 +81,7 @@ This guide has been split into multiple sections for easier navigation and maint
     - Project template structure
     - Key takeaways
 
-12. [Conclusion](12-conclusion.md)
+13. [Conclusion](13-conclusion.md)
     - The modern Python packaging paradigm
     - Implementation roadmap for Taboola teams
     - Success metrics

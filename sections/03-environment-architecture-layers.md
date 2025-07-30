@@ -4,6 +4,12 @@
 
 Every Python application runs in a **multi-layer environment stack**. Here are the key layers that affect how we manage Python projects:
 
+  <iframe src="https://www.tldraw.com/p/0zOzCdw0NMJIFmWJ4K9de?d=v0.0.1313.892.Zntmj6LUpQYEBSGgTjhRq"
+    style="width: 100%; height: 400px; border: none;"
+    allowfullscreen
+    loading="lazy"
+  ></iframe>
+
 | Layer | Python Tools | Java Tools | What They Control | Example Usage |
 |-------|--------------|------------|-------------------|---------------|
 | **6. Dependencies & Configuration** | `pip`, `uv`, `poetry` + `pyproject.toml` | `mvn`, `gradle` + `pom.xml` | Package resolution & project metadata | `pip install requests` / `mvn install` |
@@ -45,7 +51,6 @@ Proper layer separation provides clear advantages:
 |------|---------------|----------------|-------------------|
 | **Python dependencies** | `apt install python3-pandas` | `uv add pandas` | `uv`: Brilliant for Python deps, `apt`: terrible for Python versions |
 | **Application configuration** | Hard-code configs in Docker image | Environment variables + config files | Config belongs in deployment layer, not build layer |
-
 
 
 

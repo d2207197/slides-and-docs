@@ -24,15 +24,11 @@ python-packaging-good-practices/
 │   ├── 01-introduction-context.md     # Why this matters, learning objectives
 │   ├── 02-application-framework-library.md  # Core environment control concepts
 │   ├── 03-environment-architecture-layers.md  # 6-layer environment stack
-│   ├── 04-dependency-management.md
-│   ├── 05-development-practices.md
-│   ├── 06-build-systems.md
-│   ├── 07-module-subpackage-design.md
-│   ├── 08-environment-management.md
-│   ├── 09-deployment-distribution.md
-│   ├── 10-skill-levels.md
-│   ├── 11-practical-guidelines.md
-│   └── 12-conclusion.md
+│   ├── 04-python-environment-tools.md # Python tools with Java context comparisons
+│   ├── backup/                        # Archived/outdated sections
+│   │   ├── 04-dependency-management.md # Replaced by python-environment-tools
+│   │   └── 05-12-*.md                 # To be recreated
+│   └── [05-12 sections to be recreated]
 └── resources/
     ├── Modern Python Packaging Best Practices: A Comprehensive Guide for 2024-2025.md
     └── Production Python: Packaging & Library Design Best Practices.md
@@ -42,8 +38,10 @@ python-packaging-good-practices/
 
 - **sections/02-application-framework-library.md** - **CORE SECTION**: Establishes environment control as the fundamental concept driving dependency management strategies. This is the foundation for all subsequent content.
 - **sections/03-environment-architecture-layers.md** - **ARCHITECTURE SECTION**: 6-layer environment stack from hardware to dependencies, shows how different project types (Library/Framework/Application) control each layer with different flexibility strategies
+- **sections/04-python-environment-tools.md** - **TOOLS SECTION**: Python tool ecosystem with Java architectural comparisons for context, focusing on practical tool selection and usage patterns
 - **sections/01-introduction-context.md** - Updated to emphasize environment control theme and learning objectives
 - **sections/README.md** - Navigation guide for all presentation sections
+- **backup/** - Outdated sections to be recreated with updated approach
 - **resources/** - Source materials that informed the presentation development
 - **CLAUDE.md** - This guidance file for Claude Code instances
 
@@ -141,3 +139,24 @@ A comprehensive presentation that helps Taboola engineers understand:
 - Teaching approach: Shallow-to-deep suitable for presentations, avoiding overwhelming detail
 - Visual emphasis: Mermaid diagrams and concise tables preferred over lengthy explanations
 - Connection established: This foundation enables understanding of complete Python environment stack management
+
+## Java Comparison Guidelines (Added 2025-07-30)
+
+**Purpose**: Help dual-audience presentation by providing context, not deep Java instruction
+
+**Key Principles**:
+- **Java content is CONTEXT only** - to help Java developers understand Python concepts better
+- **Keep Java details minimal** - focus on high-level architectural differences, not tool deep-dives
+- **Bidirectional benefit** - helps Java devs understand Python AND Python devs understand design differences
+- **Avoid excessive detail** - Java ecosystem deep-dives detract from Python focus
+- **Focus on "why Python needs different approaches"** - JVM abstraction vs explicit environment management
+
+**Successful Pattern**:
+```
+Why Java doesn't need Python-style virtual environments:
+1. JVM Abstraction vs Manual OS management
+2. Classpath isolation vs Separate interpreters  
+3. Integrated build tools vs Separate dependency tools
+```
+
+**Avoid**: Detailed Java tool comparisons, extensive Java workflow examples, Java-focused sections
