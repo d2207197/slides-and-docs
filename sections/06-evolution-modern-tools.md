@@ -37,13 +37,57 @@ setup(
 
 ### The Modern Era (2016-2024): Declarative and Safe
 
-| Year | Tool | Key Innovation | Standard |
-|------|------|----------------|----------|
-| **2016** | `pipenv` | Pipfile + lock file | Abandoned |
-| **2017** | `poetry` | All-in-one tool | Custom format |
-| **2018** | `pyproject.toml` | Declarative config | PEP 518 |
-| **2020** | `pip` 20.3+ | New resolver | PEP 517 |
-| **2023** | `uv` | Rust speed + standards | PEP 621 |
+| Year | Tool/Standard | Key Innovation | Impact |
+|------|--------------|----------------|---------|
+| **2016** | `pipenv` | Pipfile + lock file | Abandoned but inspired others |
+| **2017** | `poetry` | All-in-one tool | Custom format, now supports standards |
+| **2018** | PEP 518 | Build system requirements | Enabled `pyproject.toml` |
+| **2020** | PEP 621 | Project metadata standard | Unified project configuration |
+| **2023** | `uv` | Rust speed + standards | 10-100x faster than pip |
+| **2024** | PEP 735 | Dependency groups | Standardized dev dependencies |
+
+### The PEP Standards Revolution
+
+#### PEP 621 (2020): Unified Project Metadata
+```toml
+# Standard way to define project metadata
+[project]
+name = "my-package"
+dependencies = ["requests>=2.28"]
+
+# Optional dependencies for end users
+[project.optional-dependencies]
+viz = ["matplotlib>=3.5", "seaborn>=0.12"]  # pip install pkg[viz]
+ml = ["scikit-learn>=1.0", "pandas>=1.5"]
+```
+
+**Tool Support (2025)**:
+- ✅ **Full support**: uv, PDM, Hatch, setuptools
+- ✅ **Added support**: Poetry (since 2023)
+- ✅ **Install only**: pip (can't manage)
+
+#### PEP 735 (2024): Dependency Groups for Developers
+```toml
+# Developer-only dependencies (not published to PyPI)
+[dependency-groups]
+dev = ["pytest>=7.0", "ruff>=0.1.0"]
+test = ["pytest>=7.0", "pytest-cov>=4.0"]
+docs = ["sphinx>=5.0", "mkdocs>=1.5"]
+```
+
+**Tool Support (2025)**:
+- ✅ **Full support**: uv, PDM, pip 25.1+
+- 🔄 **In progress**: Poetry, Hatch
+- ❌ **No support**: setuptools
+
+#### Key Difference: optional-dependencies vs dependency-groups
+
+| Aspect | optional-dependencies | dependency-groups |
+|--------|---------------------|------------------|
+| **For whom** | End users | Developers |
+| **Published to PyPI** | ✅ Yes | ❌ No |
+| **Install command** | `pip install pkg[extra]` | `uv sync --group dev` |
+| **Use case** | Feature flags | Dev tools |
 
 ### What Modern Tools Fixed
 
@@ -187,9 +231,10 @@ docker build -t myapp .
 ## Key Takeaways
 
 1. **Evolution Pattern**: Each tool solved real problems but created new ones
-2. **Modern is Better**: `pyproject.toml` + `uv` represents current best practice
-3. **Conda Has Its Place**: Essential for scientific computing, problematic for production
-4. **Choose by Use Case**: Research vs production require different tool strategies
-5. **Migration Path**: You can gradually move from older tools to modern ones
+2. **Standards Matter**: PEP 621 and PEP 735 enable tool interoperability
+3. **Modern is Better**: `pyproject.toml` + `uv` represents current best practice
+4. **Conda Has Its Place**: Essential for scientific computing, problematic for production
+5. **Choose by Use Case**: Research vs production require different tool strategies
+6. **Migration Path**: You can gradually move from older tools to modern ones
 
-**Bottom Line**: The Python packaging ecosystem evolved from chaotic (setup.py) to sophisticated (uv + pyproject.toml). Understanding this evolution helps you choose the right tool for your specific needs.
+**Bottom Line**: The Python packaging ecosystem evolved from chaotic (setup.py) to sophisticated (standardized pyproject.toml). Understanding this evolution and the standards helps you choose the right tool for your specific needs.

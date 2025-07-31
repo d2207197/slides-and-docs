@@ -27,18 +27,17 @@ This guide has been split into multiple sections for easier navigation and maint
    - Java tools comparison
    - Tool combination strategies and selection guide
 
-5. [Dependency Management Strategy](05-dependency-management.md)
-   - The lock file revolution (2024-2025)
-   - Modern dependency hierarchy - six layers
-   - System, application, and library dependencies
-   - Dependency resolution examples
+5. [Library Repository Structure & pyproject.toml Design](05-library-repository-structure.md)
+   - Standard Python library repository structure
+   - pyproject.toml design for library projects
+   - Module and subpackage organization patterns
+   - Library distribution and publishing workflows
+   - uv vs hatch for library development
 
-6. [Development Practices & Quality Assurance](06-development-practices.md)
-   - Code quality pyramid
-   - Code formatting
-   - Type checking with mypy
-   - Testing with pytest
-   - Testing strategy
+6. [Evolution of Modern Python Tools](06-evolution-modern-tools.md)
+   - Modern Python tool ecosystem evolution
+   - Performance improvements and adoption trends
+   - Tool specialization and enterprise considerations
 
 7. [Build Systems & Package Management](07-build-systems.md)
    - pyproject.toml: The standardization revolution
