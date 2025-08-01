@@ -4,14 +4,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This repository is designed to prepare a presentation about Python packaging and production best practices for software engineers at Taboola's Taipei office. The content targets two main audiences:
+This repository is designed to prepare a presentation about Python packaging and production best practices for software engineers at Taboola's Taipei office. 
+
+## Why This Matters for Taboola
+
+At Taboola, we have diverse teams:
+- **Data Scientists & ML Engineers**: Strong Python skills, but may lack packaging experience
+- **Backend Engineers**: Strong software engineering practices (Java), but new to Python ecosystem
+- **Need**: Production-ready Python code that scales, maintains, and integrates well
+
+The content targets two main audiences:
 
 - **Data Scientists/ML Engineers**: Strong Python skills but limited packaging knowledge
 - **Backend Engineers**: Strong Java/software engineering practices but new to Python ecosystem
 
 **Core Theme**: The presentation focuses on **environment control as the fundamental driver of Python dependency management**. The goal is to help engineers understand how different Python tool types (libraries, frameworks, applications) control their execution environments, and how this determines dependency management strategies.
 
-The approach bridges the gap between "script mentality" and "production software" mindset through understanding who controls what in the Python ecosystem stack.
+Understanding who controls what in the Python ecosystem is crucial for making effective architectural decisions and managing complex production environments. The approach bridges the gap between "script mentality" and "production software" mindset through understanding who controls what in the Python ecosystem stack.
 
 ## Content Structure
 
