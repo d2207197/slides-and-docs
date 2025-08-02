@@ -1,124 +1,124 @@
-# Section 06: Application Development with Docker + uv
+# Section 06: Server Application Development with Docker + uv
 
-> How applications differ from libraries: production deployment, reproducibility, and environment control
+> How server applications differ from libraries: production deployment, containerization, and full environment control
 
-## Application Characteristics
+## What Makes a Good Server Application
 
-Building on the library concepts from Section 05, applications have fundamentally different requirements:
+Successful server applications share four key traits:
 
-### 🎯 **Full Environment Control** 
-*Unlike libraries which have no environment control*
+### 🎯 **Full Environment Control**
+- **Exact dependencies**: `==1.5.3` not `>=1.0,<2.0`
+- **Controlled deployment**: Docker images, Kubernetes
+- **Security hardening**: Non-root users, minimal images
 
-- **You own the deployment**: Control OS, Python version, system packages
-- **Reproducible environments**: Exact dependency versions across dev/staging/production
-- **Security hardening**: Minimal attack surface, non-root execution
-- **Performance optimization**: Tailored for specific use cases
-
-### 🔒 **Exact Dependencies**
-*Opposite of library flexibility*
-
-- **Lock files required**: `uv.lock` pins exact versions for reproducibility
-- **Predictable behavior**: Same code, same dependencies, same results
-- **Security compliance**: Track specific versions for vulnerability management
-- **Change control**: Deliberate dependency updates, not automatic
+### 🔒 **Reproducible Deployments**
+- **Lock files**: `uv.lock` pins exact versions
+- **Container images**: Same environment everywhere
+- **Staged rollouts**: Dev → staging → production
 
 ### 🚀 **Production-First Design**
-*Beyond library development concerns*
+- **Health checks**: `/health` endpoints
+- **Graceful shutdown**: Signal handling
+- **Horizontal scaling**: Stateless design
 
-- **Deployment artifacts**: Docker images, not PyPI packages  
-- **Infrastructure integration**: Load balancers, databases, monitoring
-- **Operational concerns**: Health checks, logging, metrics
-- **Scaling considerations**: Horizontal scaling, stateless design
+### ⚡ **Fast Development**
+- **Local iteration**: `uv run` without Docker
+- **Quick builds**: Multi-stage containers
+- **Efficient testing**: Isolated environments
 
-### ⚡ **Performance Focus**
-*Different optimization targets than libraries*
+**Key Insight**: Server applications succeed by being **reliable and deployable**.
 
-- **Startup time**: Fast application boot for containers
-- **Memory efficiency**: Optimized for specific workload patterns
-- **Build optimization**: Cached layers, minimal final image size
-- **Runtime efficiency**: Application-specific performance tuning
+## Server Application vs Library: Side-by-Side Comparison
 
-## Application vs Library: Side-by-Side Comparison
+Building on Section 05's library patterns, here's what changes for server applications:
 
-Building on Section 05's library patterns, here's what changes for applications:
-
-| Aspect | **Libraries** (Section 05) | **Applications** (This Section) |
+| Aspect | **Libraries** (Section 05) | **Server Applications** (This Section) |
 |--------|---------------------------|----------------------------------|
-| **Environment Control** | ❌ None - must adapt | ✅ Full - you control everything |
+| **Environment Control** | ⚠️ Minimal - specify ranges | ✅ Full - you control everything |
 | **Dependencies** | `>=1.0,<2.0` (flexible) | `==1.5.3` (exact, via lock files) |
 | **Project Structure** | `src/` layout + pyproject.toml | **+ Dockerfile + uv.lock** |
-| **Distribution** | PyPI packages (.whl, .tar.gz) | **Docker images** |
+| **Distribution** | PyPI packages (.whl, .tar.gz) | **Docker images for deployment** |
 | **Testing Strategy** | Matrix testing (multiple versions) | **Integration testing (specific stack)** |
-| **User Installation** | `pip install your-library` | **`docker run your-app`** |
-| **Updates** | Users control when to update | **You control deployment timing** |
+| **User Access** | `pip install your-library` | **HTTP APIs, web interfaces** |
+| **Deployment** | Users control installation | **Container orchestration (K8s, Docker Swarm)** |
 
-**Key Insight**: Applications **add** production deployment concerns to the library foundation.
+**Key Insight**: Server applications **add** production deployment concerns to the library foundation.
 
-## Application Project Structure
+## Server Application Project Structure
 
 ### Extended Structure from Libraries
 
-Building on the library structure from Section 05, applications add deployment-specific files:
+Building on the library structure from Section 05, server applications add deployment-specific files:
 
 ```
-my-api/                          # Application repository
-├── 📋 Library Foundation (from Section 05)
-│   ├── pyproject.toml           # Dependencies with flexible ranges
-│   ├── README.md                # Project description
-│   └── .python-version          # Development Python version
-├── 📁 Source Code (same as libraries)
-│   ├── src/
-│   │   └── my_api/              # Python package
-│   │       ├── __init__.py
-│   │       └── main.py          # Application entry point
-│   └── tests/
-│       └── test_main.py
-├── 🐳 Production Deployment (NEW)
-│   ├── Dockerfile               # Container definition
-│   ├── uv.lock                  # Exact dependency versions
-│   └── .dockerignore            # What to exclude from image
-├── 🔧 Development Tools
-│   └── .github/workflows/
-       ├── test.yml              # CI testing
-       └── deploy.yml            # CD deployment
+my-api/                          # Server application repository
+├── pyproject.toml               # Same as libraries
+├── README.md                    # Same as libraries  
+├── src/my_api/                  # Same as libraries
+├── tests/                       # Same as libraries
+├── Dockerfile                   # NEW: Container definition
+├── uv.lock                      # NEW: Exact dependency versions
+├── .dockerignore                # NEW: Exclude files from Docker build
+├── .python-version              # NEW: Pin Python version for deployment
+└── .github/workflows/           # NEW: CI/CD for deployment
+    ├── test.yml
+    └── deploy.yml
 ```
 
-### What's Different from Libraries
+### Key Deployment Files (vs Libraries)
 
-**🔒 Lock Files** (`uv.lock`):
-- **Purpose**: Pin exact dependency versions for reproducibility
-- **Libraries don't need this**: They use flexible ranges
-- **Applications require this**: Same behavior across environments
+**`uv.lock`** - Exact dependency versions:
+- Libraries: Flexible ranges (`>=1.0,<2.0`) for maximum compatibility
+- Server apps: Exact versions (`==1.5.3`) for reproducible deployments
 
-**🐳 Docker Files**:
-- **Dockerfile**: Defines the complete application environment
-- **.dockerignore**: Excludes development files from production images
-- **Libraries don't use Docker**: They're components, not deployable units
+**`Dockerfile`** - Container environment definition:
+- Libraries: Distributed as packages, users handle environment
+- Server apps: Complete environment packaged for deployment
 
-**🚀 Production Configuration**:
-- **Environment variables**: Runtime configuration
-- **Health checks**: Application readiness monitoring  
-- **Security settings**: Non-root users, minimal permissions
+**`.dockerignore`** - Build optimization:
+- Excludes development files (tests/, docs/, .git/) from production images
+
+**`.python-version`** - Python version for local development:
+- Libraries: Support multiple Python versions for broad compatibility
+- Server apps: Pin specific version for local testing (should match Dockerfile)
+
+## Dependency Strategy for Server Applications
+
+Server applications use **conservative dependency ranges** compared to libraries:
+
+**🎯 Version Strategy**:
+- **Libraries**: Major versions (`>=1.0,<2.0`) for maximum compatibility
+- **Server Apps**: Minor versions (`>=0.100,<0.200`) for stability + security patches
+
+**Example**: 
+```toml
+# Conservative but practical ranges
+dependencies = [
+    "fastapi>=0.100,<0.200",    # Minor version range
+    "uvicorn>=0.20,<0.30",      # Patch updates OK, minor changes tested  
+    "psycopg2>=2.9,<2.10",      # Very conservative for database drivers
+]
+```
 
 ## Lock Files and Reproducibility
 
 ### Why Applications Need Lock Files
 
-**❌ Library Problem** (flexible ranges can cause issues in production):
+**❌ Problem with Flexible Ranges** (even conservative ones can drift):
 ```toml
 # pyproject.toml (what you specify)
-dependencies = ["fastapi>=0.104,<0.105"]
+dependencies = ["fastapi>=0.100,<0.200"]
 
 # What actually gets installed?
 # Dev environment: fastapi==0.104.0 (latest at dev time)
-# Production: fastapi==0.104.3 (latest at deploy time)
+# Production: fastapi==0.108.2 (latest at deploy time)
 # Result: Different behavior between environments!
 ```
 
 **✅ Application Solution** (lock files ensure consistency):
 ```toml
-# pyproject.toml (still use flexible ranges for compatibility)
-dependencies = ["fastapi>=0.104,<0.105"]
+# pyproject.toml (conservative but flexible ranges)
+dependencies = ["fastapi>=0.100,<0.200"]
 
 # uv.lock (auto-generated, pins exact versions)
 [[package]]
@@ -130,32 +130,52 @@ version = "0.104.0"  # Exact version used everywhere
 
 ```bash
 # Create/update lock file (run this during development)
-uv lock
+uv lock                         # Resolves all dependencies once
 
 # Install exact versions from lock file (run this in production)
-uv sync --frozen
+uv sync --frozen                 # Fast install - no dependency resolution needed
 
 # Lock file contains complete dependency tree
 # fastapi==0.104.0 depends on starlette==0.27.0, etc.
-# All transitive dependencies pinned to exact versions
+# All transitive dependencies already resolved to exact versions
 ```
 
-### Lock File Benefits for Applications
+**📝 Lock File Standards**: Currently each tool uses its own format (`uv.lock`, `poetry.lock`, etc.). **PEP 751** (accepted March 2025) proposes a standard `pylock.toml` format that all tools will eventually support.
 
-**🔄 Reproducible Deployments**:
-- **Same code + same dependencies = same behavior**
-- **Dev, staging, production all use identical package versions**
-- **No surprise behavior changes from dependency updates**
+**⚡ Performance Benefit**: Lock files skip dependency resolution during installation, making deployments significantly faster since all version conflicts are already resolved.
 
-**🛡️ Security and Compliance**:
-- **Track exact versions for vulnerability scanning**
-- **Controlled dependency updates through lock file updates**
-- **Audit trail of what's deployed when**
+### Lock File Benefits
 
-**🐛 Easier Debugging**:
-- **Eliminate "works on my machine" issues**
-- **Reproduce production issues locally with same dependencies**
-- **Rollback includes dependencies, not just application code**
+Lock files solve the core server application challenges:
+
+- **🔄 Reproducibility**: Same versions across all environments  
+- **⚡ Speed**: Skip dependency resolution during deployment
+- **🛡️ Security**: Track exact versions for vulnerability management
+- **🐛 Debugging**: Eliminate "works on my machine" issues
+
+## Server Application Development Workflow
+
+### uv Commands for Server Applications
+
+**Key Difference from Libraries**: Server applications use lock files for exact reproducibility:
+
+```bash
+# Setup and dependency management
+uv init my-api                # Initialize server application
+uv add "fastapi>=0.100,<0.200"  # Conservative version ranges
+uv lock                       # Generate uv.lock with exact versions
+
+# Development workflow
+uv sync                       # Install dependencies (allows updates)
+uv run uvicorn my_api.main:app --reload --host 0.0.0.0 --port 8000
+
+# Production deployment
+uv sync --frozen              # Install exact versions from lock file
+```
+
+**🔄 Development vs Production Pattern**:
+- **Development**: `uv sync` (updates allowed)
+- **Production**: `uv sync --frozen` (exact versions only)
 
 ## Docker Integration
 
@@ -165,7 +185,7 @@ Applications use Docker to package the complete runtime environment. Here's an o
 
 ```dockerfile
 # === STAGE 1: Build Dependencies ===
-FROM python:3.11-slim as builder
+FROM python:3.11-slim as builder  # Should match .python-version
 
 # Install system build dependencies
 RUN apt-get update && apt-get install -y \
@@ -186,7 +206,7 @@ COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen --no-dev
 
 # === STAGE 2: Runtime (Production) ===
-FROM python:3.11-slim
+FROM python:3.11-slim  # Same version as .python-version
 
 # Create non-root user for security
 RUN useradd --create-home --shell /bin/bash app
@@ -251,68 +271,27 @@ RUN uv sync --frozen --no-dev
 3. **Python dependencies**: Cached unless pyproject.toml/uv.lock changes
 4. **Application code**: Re-built on every code change
 
-## Production Deployment Patterns
+### Development vs Production Integration
 
-### Environment-Specific Configuration
-
-**⚙️ pyproject.toml** (base configuration):
-```toml
-[project]
-name = "my-api"
-version = "1.0.0"
-dependencies = [
-    "fastapi>=0.104,<0.105",
-    "uvicorn>=0.24,<0.25",
-    "psycopg2>=2.9,<3",
-]
-
-[project.optional-dependencies]
-dev = ["pytest>=7.0.0", "black>=22.0.0"]
-```
-
-**🔒 uv.lock** (exact versions for reproducibility):
-```yaml
-# Auto-generated, don't edit manually
-version = 1
-requires-python = ">=3.11"
-
-[[package]]
-name = "fastapi"
-version = "0.104.0"
-source = { registry = "https://pypi.org/simple" }
-# ... complete dependency tree with exact versions
-```
-
-**🐳 Dockerfile** (production environment):
-```dockerfile
-# Production configuration
-ENV PYTHONUNBUFFERED=1
-ENV PYTHONDONTWRITEBYTECODE=1
-
-# Application configuration via environment variables
-ENV API_HOST=0.0.0.0
-ENV API_PORT=8000
-ENV DATABASE_URL=${DATABASE_URL}
-```
-
-### Development vs Production Workflows
-
-**💻 Development Workflow**:
+**💻 Local Development** (flexible, fast iteration):
 ```bash
-# Local development (flexible, fast iteration)
-uv sync           # Install with dev dependencies
-uv run pytest    # Run tests
-uv run uvicorn my_api.main:app --reload
+# Fast development cycle with uv
+uv run uvicorn my_api.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-**🚀 Production Workflow**:
+**🚀 Containerized Production** (reproducible, optimized):
 ```bash
-# Production build (reproducible, optimized)
+# Build with exact dependencies from uv.lock
 docker build -t my-api:latest .
+
+# Deploy with environment configuration
 docker run -p 8000:8000 \
   -e DATABASE_URL=postgresql://... \
+  -e PYTHONUNBUFFERED=1 \
   my-api:latest
 ```
+
+**Key Integration**: uv handles dependency management, Docker handles deployment packaging.
 
 ### Layer Separation in Practice
 
@@ -320,11 +299,11 @@ Applications implement the 6-layer environment architecture from Section 03:
 
 | Layer | **Libraries** | **Applications** | Tool Responsibility |
 |-------|---------------|------------------|-------------------|
-| **6. Dependencies** | Flexible ranges | ✅ **Exact versions (uv.lock)** | uv manages reproducibility |
-| **5. Virtual Environment** | Development only | ✅ **Production .venv** | uv creates, Docker packages |
-| **4. Python Runtime** | User's choice | ✅ **Controlled version** | Docker base image |
-| **3. System Dependencies** | User's system | ✅ **Dockerfile apt packages** | Docker manages |
-| **2. Operating System** | User's OS | ✅ **Container OS** | Docker provides |
+| **6. Dependencies** | Flexible ranges | ✅ **Exact versions (uv.lock)** | **uv** manages reproducibility |
+| **5. Virtual Environment** | Development only | ✅ **Production .venv** | **uv** creates, **Docker** packages |
+| **4. Python Runtime** | User's choice | ✅ **Controlled version** | **Docker** base image |
+| **3. System Dependencies** | User's system | ✅ **Dockerfile apt packages** | **Docker** manages |
+| **2. Operating System** | User's OS | ✅ **Container OS** | **Docker** provides |
 | **1. Hardware** | User's hardware | ✅ **Cloud infrastructure** | Kubernetes/cloud |
 
 **Key Insight**: Applications control **all layers**, libraries control **none**.
@@ -367,31 +346,14 @@ HEALTHCHECK --interval=30s --timeout=10s \
 CMD ["python", "-m", "my_api.main"]  # Proper process management
 ```
 
-### Common Anti-Patterns Avoided
-
-**❌ What NOT to do**:
-1. **Single-stage builds**: Bloated images with build tools in production
-2. **Root user execution**: Security vulnerability
-3. **No lock files**: Non-reproducible deployments
-4. **Mixed dev/prod configs**: Environment inconsistencies
-5. **Large image layers**: Poor caching and slow deployments
-
-**✅ What this pattern provides**:
-1. **Multi-stage builds**: Optimized production images
-2. **Security hardening**: Non-root user, minimal attack surface  
-3. **Reproducible deployments**: Lock files ensure consistency
-4. **Layer separation**: Each tool manages appropriate concerns
-5. **Development parity**: Same dependencies in dev and production
-
 ## Key Takeaways
 
-1. **Applications extend library patterns** → add Docker, lock files, production concerns
-2. **Full environment control enables reproducibility** → exact versions, controlled infrastructure  
-3. **Multi-stage builds optimize production images** → build tools separate from runtime
-4. **Lock files ensure deployment consistency** → same dependencies across environments
-5. **Layer separation prevents architectural problems** → right tool for each concern
-6. **Security requires deliberate design** → non-root users, minimal attack surface
-7. **Production-first thinking drives application design** → deployment, not just development
+1. **Layer separation is critical** → uv manages Python dependencies, Docker handles deployment
+2. **Local development without Docker** → faster iteration with `uv run` for development servers
+3. **Lock files enable reproducibility** → same exact versions across all environments
+4. **Conservative dependency ranges** → minor version constraints for server applications
+5. **Multi-stage Docker builds** → separate build tools from production runtime
+6. **Python-first tooling** → use uv for all Python dependency management, not mixed tools
 
 ---
 
