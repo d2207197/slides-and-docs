@@ -11,7 +11,7 @@ Understanding who controls what in the Python ecosystem is crucial for making ef
 ### Foundational Concepts
 
 1. **[Introduction & Context](01-introduction-context.md)**
-   - Why this matters for Taboola engineers
+   - Why this matters for modern development teams
    - Learning objectives
    - Target audiences (Data Scientists/ML Engineers & Backend Engineers)
 
@@ -85,4 +85,4 @@ Each section includes:
 
 ---
 
-*This presentation helps Taboola engineers transition from "just writing Python scripts" to building production-grade Python software with proper dependency management and architectural understanding.*
+*This presentation helps development teams transition from "just writing Python scripts" to building production-grade Python software with proper dependency management and architectural understanding.*

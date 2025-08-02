@@ -23,10 +23,10 @@ Shows each tool's **core responsibility** (🎯) and how they control additional
 
 | Environment Layer | Docker | uv | conda | poetry | pyenv | pip |
 |-------------------|--------|----|----|--------|--------|-----|
-| **6. Dependencies & Config** | ✅ *orchestrates pip/conda* | 🎯 *direct resolution* | 🎯 *direct conda + PyPI* | 🎯 *orchestrates pip* | | 🎯 *direct install* |
-| **5. Environment Isolation** | 🎯 *container isolation* | 🎯 *creates .venv* | ✅ *conda envs* | ✅ *delegates to venv* | | |
-| **4. Runtime Platform** | ✅ *base image + apt* | ✅ *downloads binaries* | ✅ *pre-built binaries* | | 🎯 *compiles from source* | |
-| **3. System Packages** | 🎯 *apt/yum in container* | | 🎯 *conda-forge C/C++* | | | |
+| **6. Dependency Management** | ✅ *orchestrates pip/conda* | 🎯 *direct resolution* | 🎯 *direct conda + PyPI* | 🎯 *orchestrates pip* | | 🎯 *direct install* |
+| **5. Runtime Environment** | 🎯 *container isolation* | 🎯 *creates .venv* | ✅ *conda envs* | ✅ *delegates to venv* | | |
+| **4. Language Runtime** | ✅ *base image + apt* | ✅ *downloads binaries* | ✅ *pre-built binaries* | | 🎯 *compiles from source* | |
+| **3. System Dependencies** | 🎯 *apt/yum in container* | | 🎯 *conda-forge C/C++* | | | |
 | **2. Operating System** | 🎯 *container OS layer* | | | | | |
 
 **Control Types:**
@@ -57,10 +57,10 @@ Effective patterns for dividing layer management between tools:
 
 | Environment Layer | Pattern 1:<br/>🔥 Docker + ⚡ uv | Pattern 2:<br/>🔥 Docker + 🐍 pyenv + 📦 Poetry | Pattern 3:<br/>🧪 Conda Only | Pattern 4:<br/>Native + ⚡ uv |
 |-------------------|---------------------------|----------------------------------------|---------------------------|----------------------------|
-| **6. Dependencies & Config** | ⚡ uv | 📦 Poetry | 🧪 Conda | ⚡ uv |
-| **5. Environment Isolation** | ⚡ uv | 📦 Poetry | 🧪 Conda | ⚡ uv |
-| **4. Runtime Platform** | ⚡ uv | 🐍 pyenv | 🧪 Conda | ⚡ uv |
-| **3. System Packages** | 🔥 Docker | 🔥 Docker | 🧪 Conda | Native OS |
+| **6. Dependency Management** | ⚡ uv | 📦 Poetry | 🧪 Conda | ⚡ uv |
+| **5. Runtime Environment** | ⚡ uv | 📦 Poetry | 🧪 Conda | ⚡ uv |
+| **4. Language Runtime** | ⚡ uv | 🐍 pyenv | 🧪 Conda | ⚡ uv |
+| **3. System Dependencies** | 🔥 Docker | 🔥 Docker | 🧪 Conda | Native OS |
 | **2. Operating System** | 🔥 Docker | 🔥 Docker | Host OS | Host OS |
 
 ### Pattern Details
@@ -217,3 +217,8 @@ This detailed reference covers:
 - **Ecosystem differences**: Python vs Java strengths and trade-offs
 - **Migration tips**: For developers switching between ecosystems
 - **Enterprise considerations**: Tool maturity and production readiness
+
+---
+
+**Next Section**: [05-library-repository-structure.md](05-library-repository-structure.md) - Modern library structure and organization
+**Previous Section**: [03-environment-architecture-layers.md](03-environment-architecture-layers.md) - Environment architecture layers

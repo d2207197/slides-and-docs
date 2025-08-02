@@ -125,3 +125,8 @@ graph TB
 **Complexity drives environment control needs:**
 - **Libraries**: Usually simple → Can maintain both compatibility and stability
 - **Applications**: More complex → Need higher environment control by sacrificing compatibility to ensure reliability
+
+---
+
+**Next Section**: [03-environment-architecture-layers.md](03-environment-architecture-layers.md) - 6-layer environment stack
+**Previous Section**: [01-introduction-context.md](01-introduction-context.md) - Introduction & context

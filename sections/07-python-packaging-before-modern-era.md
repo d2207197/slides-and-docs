@@ -406,4 +406,7 @@ By 2015, Python's packaging was **15+ years behind** other modern languages:
 
 The stage was set for a revolution. Python needed to modernize or risk losing developers to languages with better tooling. The community was ready for change.
 
-**Next**: How Python responded with the modern tooling era (2016-2024) →
+---
+
+**Next Section**: [08-python-evolution-modern-tools.md](08-python-evolution-modern-tools.md) - The Python packaging renaissance
+**Previous Section**: [06-module-subpackage-design.md](06-module-subpackage-design.md) - Module & subpackage design
