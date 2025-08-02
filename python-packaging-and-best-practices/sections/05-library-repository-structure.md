@@ -302,17 +302,22 @@ docs = ["sphinx>=4.0.0", "furo>=2022.0.0"]
 
 ### Why uv for Library Development
 
-**🚀 Performance Benefits**:
+**👨‍💻 Developer Benefits**:
 - **10-100x faster** than pip for dependency resolution
 - **Integrated Python management**: No need for separate pyenv
 - **Built-in virtual environments**: Automatic .venv creation
+- **Single binary**: No complex installation, works everywhere
+- **Tool management**: `uv tool install` / `uvx` for isolated CLI tools
 
 **🔧 Library-Friendly Features**:
-- **Multi-Python testing**: Easy testing across Python versions
-- **Flexible dependency handling**: Respects version ranges properly
 - **Modern standards**: Native pyproject.toml support
 
+**🏗️ Application-Friendly Features**:
+- **Lock file generation**: Creates uv.lock for reproducible environments
+
 ### Essential uv Commands for Libraries
+
+Here's how to set up a new library project and demonstrate uv's key advantages:
 
 ```bash
 # Initialize new library project
@@ -323,34 +328,39 @@ cd my-awesome-library
 uv add "requests>=2.25.0,<3.0.0"
 uv add "typer>=0.9.0,<1.0.0"
 
-# Add development dependencies
-uv add --dev pytest black ruff
-
 # Install in development mode
-uv sync
-
-# Test your library as end users would install it
-uv build
-uv run --isolated python -c "import my_awesome_library; print('Success!')"
-
-# Test with different Python versions
-uv run --python 3.8 pytest
-uv run --python 3.11 pytest
+uv sync                      # Creates .venv/, installs dependencies, activates environment
 ```
 
 ### Development Workflow
 
+Once your library is set up, here's the typical day-to-day development cycle:
+
 ```bash
 # Daily development cycle
-uv sync                    # Ensure environment is up to date
-uv run pytest            # Run tests
-uv run black src/         # Format code
-uv run ruff check src/    # Lint code
+uv sync                    # Auto-creates .venv/, syncs all dependencies
+uv sync --group test       # Install specific dependency groups (if using dependency-groups)
 
-# Before releasing
+# Two ways to run tools:
+uv run pytest            # Run from project environment (if pytest installed in project)
+uvx pytest src/          # Run from isolated environment (always works, no install needed)
+
+uv run black src/         # Use project's black version
+uvx ruff check src/       # Use latest ruff without adding to project dependencies
+
+# Test with different Python versions - ensures broad compatibility
+uv run --python 3.10 pytest
+uv run --python 3.11 pytest
+
+# Before releasing - build and test package
 uv build                  # Build distribution packages
+uv run --isolated python -c "import my_awesome_library; print('Success!')"
 uv run twine check dist/* # Verify packages are valid
 ```
+
+**Key Difference: `uv run` vs `uvx`**:
+- **`uv run`**: Runs tools from your project's virtual environment (needs to be installed first)
+- **`uvx`**: Runs tools in isolated temporary environments (no installation, always latest version)
 
 ## Distribution and Publishing
 
