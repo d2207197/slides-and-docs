@@ -191,5 +191,5 @@ This detailed reference covers:
 
 ---
 
-**Next Section**: [05-application-example-docker-uv.md](05-application-example-docker-uv.md) - Complete Docker + uv application example
+**Next Section**: [05-library-repository-structure.md](05-library-repository-structure.md) - Simple library example with uv
 **Previous Section**: [03-environment-architecture-layers.md](03-environment-architecture-layers.md) - Environment architecture layers

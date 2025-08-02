@@ -255,4 +255,4 @@ from mypackage import *  # ❌ What needs mocking?
 ---
 
 **Next Section**: [08-python-packaging-before-modern-era.md](08-python-packaging-before-modern-era.md) - The Wild West years
-**Previous Section**: [06-library-repository-structure.md](06-library-repository-structure.md) - Complete repository organization
+**Previous Section**: [06-application-example-docker-uv.md](06-application-example-docker-uv.md) - Complete Docker + uv application example

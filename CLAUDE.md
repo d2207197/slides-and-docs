@@ -170,3 +170,18 @@ Why Java doesn't need Python-style virtual environments:
 ```
 
 **Avoid**: Detailed Java tool comparisons, extensive Java workflow examples, Java-focused sections
+
+## Coding Guidelines
+
+- **Language**: Only use English throughout all documentation and content
+- **Presentation Format**: Keep sentences concise for presentation delivery
+- **Avoid Long Paragraphs**: Break complex explanations into bullet points or short sentences
+- **Visual Focus**: Prefer tables, diagrams, and structured lists over lengthy prose
+
+## Recent Development Notes
+
+- **Streamlined Section 04**: Removed redundancy, added 2024-2025 tool combinations
+- **Presentation Optimization**: Converted long explanations to concise bullet points
+- **Key Takeaways Added**: Consolidated multiple summary sections into single takeaways section
+- **Anti-pattern Clarification**: Fixed conda + uv contradiction, maintained technical accuracy
+- **Tool Selection Framework**: Enhanced with specific technical rationales instead of repeated principles

@@ -189,5 +189,5 @@ docker run -p 8000:8000 my-api       # Deploy
 
 ---
 
-**Next Section**: [06-library-repository-structure.md](06-library-repository-structure.md) - Modern library structure and organization
-**Previous Section**: [04-python-environment-tools.md](04-python-environment-tools.md) - Python environment tools and patterns
+**Next Section**: [07-module-subpackage-design.md](07-module-subpackage-design.md) - Module organization and import management  
+**Previous Section**: [05-library-repository-structure.md](05-library-repository-structure.md) - Simple library example with uv
