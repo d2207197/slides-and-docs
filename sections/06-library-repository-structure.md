@@ -629,5 +629,5 @@ Library repository structure reflects the fundamental principle of **no environm
 
 ---
 
-**Next Section**: [06-module-subpackage-design.md](06-module-subpackage-design.md) - Module organization and import management
-**Previous Section**: [04-python-environment-tools.md](04-python-environment-tools.md) - Python environment management tools
+**Next Section**: [07-module-subpackage-design.md](07-module-subpackage-design.md) - Module organization and import management
+**Previous Section**: [05-application-example-docker-uv.md](05-application-example-docker-uv.md) - Complete Docker + uv application example

@@ -32,15 +32,21 @@ Understanding who controls what in the Python ecosystem is crucial for making ef
    - Modern tool ecosystem with Java architectural comparisons
    - Tool specialization by environment layer
    - Performance considerations (uv 10-100x faster)
-   - Enterprise scale limitations (conda beyond 100 developers)
+   - Anti-patterns to avoid (conda + uv conflicts)
 
-5. **[Library Repository Structure](05-library-repository-structure.md)**
+5. **[Application Example: Docker + uv](05-application-example-docker-uv.md)**
+   - Complete FastAPI application with Docker deployment
+   - Multi-stage build optimization (6x smaller images)
+   - Development workflow and production parity
+   - Layer separation in practice
+
+6. **[Library Repository Structure](06-library-repository-structure.md)**
    - Modern Python library layout (src/ structure)
    - pyproject.toml design for maximum reusability
    - uv vs hatch for library development
    - Distribution and publishing workflows
 
-6. **[Module & Subpackage Design](06-module-subpackage-design.md)**
+7. **[Module & Subpackage Design](07-module-subpackage-design.md)**
    - Design principles and anti-patterns
    - Import management and namespace control
    - Advanced patterns (lazy loading, plugin systems)
@@ -48,13 +54,13 @@ Understanding who controls what in the Python ecosystem is crucial for making ef
 
 ### Historical Context
 
-7. **[Python Packaging Before the Modern Era](07-python-packaging-before-modern-era.md)**
+8. **[Python Packaging Before the Modern Era](08-python-packaging-before-modern-era.md)**
    - The Wild West period (2000-2016)
    - Problems with setup.py approach
    - Tool proliferation and fragmentation
    - Why Java developers had it easier
 
-8. **[Evolution of Modern Python Tools](08-python-evolution-modern-tools.md)**
+9. **[Evolution of Modern Python Tools](09-python-evolution-modern-tools.md)**
    - The Renaissance period (2016-2024)
    - Performance revolution and tool consolidation
    - Modern best practices emergence

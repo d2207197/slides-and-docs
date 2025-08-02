@@ -254,5 +254,5 @@ from mypackage import *  # ❌ What needs mocking?
 
 ---
 
-**Next Section**: [07-python-packaging-before-modern-era.md](07-python-packaging-before-modern-era.md) - The Wild West years
-**Previous Section**: [05-library-repository-structure.md](05-library-repository-structure.md) - Complete repository organization
+**Next Section**: [08-python-packaging-before-modern-era.md](08-python-packaging-before-modern-era.md) - The Wild West years
+**Previous Section**: [06-library-repository-structure.md](06-library-repository-structure.md) - Complete repository organization

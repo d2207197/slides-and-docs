@@ -13,7 +13,6 @@ The Python ecosystem contains hundreds of tools. Understanding their **categorie
 | **Scientific Ecosystem** | 🔸 **Moderate** (3-6) | **Conda**, Mamba | Projects with C/C++/CUDA dependencies |
 | **Runtime Version Managers** | 🌐 **Flexible** (4) | pyenv, **mise**, asdf | Python version switching (mostly replaced by uv) |
 | **Package Managers** | 🌐 **Flexible** (6) | **pip**, pip-tools, pipx | Basic package installation |
-| **Code Quality** | — | **Ruff**, Black, **mypy**, **pytest** | All projects (development workflow) |
 | **Build & Distribution** | — | setuptools, **Hatch**, **twine** | Publishing libraries to PyPI |
 
 
@@ -41,9 +40,9 @@ Based on your **deployment context and requirements**, different project types b
 | Project Type | Common Examples | Recommended Tools | Why This Combination? |
 |--------------|-----------------|-------------------|----------------------|
 | **🌐 Server Applications** | APIs, web services, microservices | **Docker + uv** | • Docker: Production isolation & deployment<br/>• uv: Fast dependency resolution<br/>• Result: Reproducible cloud/server deploys |
-| **💻 CLI/Desktop Tools** | Developer utilities, local automation | **uv** or **pipx** | • uv: Fast, integrated Python management<br/>• pipx: Isolated tool installations<br/>• Result: Easy distribution & updates |
+| **💻 CLI/Desktop Tools** | Developer utilities, local automation | **uv tool** or **pipx** | • uv: Fast, integrated Python management<br/>• pipx: Isolated tool installations<br/>• Result: Easy distribution & updates |
 | **🔬 Data/Scientific Applications** | ML pipelines, research code, notebooks | **conda** or **uv + Docker** | • conda: Native C/C++/CUDA dependencies<br/>• Docker optional for reproducibility<br/>• Result: Complex dependency handling |
-| **📦 Reusable Packages** | Libraries & frameworks for PyPI | **uv** | • uv: Dependency ranges + fast resolution<br/>• Built-in Python version management<br/>• Result: Modern tooling + broad compatibility |
+| **📦 Reusable Packages** | Libraries & frameworks for PyPI | **uv** or hatch | • uv: Dependency ranges + fast resolution<br/>• Built-in Python version management<br/>• Result: Modern tooling + broad compatibility |
 
 **Core Pattern**: Deployment context drives tool selection
 - **Server apps**: Need containerization for deployment consistency
@@ -102,89 +101,13 @@ uv and conda maintain **completely separate package databases**. When uv needs n
 
 **Real-world scenario**: ML team uses conda for GPU libraries, adds uv for web APIs. First deployment succeeds, production crashes after security updates.
 
-## Concrete Example: Docker + uv Pattern
+## Summary
 
-### Repository Structure
-```
-my-api/                 # Repository name (kebab-case)
-├── pyproject.toml      # uv manages dependencies + environment (Layer 5-6)
-├── uv.lock             # Locked versions for reproducibility (Layer 6)
-├── Dockerfile          # Docker manages OS/system (Layer 2-3)
-├── .python-version     # Python version specification (Layer 4)
-├── src/
-│   └── my_api/         # Python package (snake_case, matches repo name)
-│       ├── __init__.py
-│       └── main.py     # FastAPI application
-└── tests/
-    └── test_main.py    # Test files
-```
-
-### Key Configuration Files
-
-**pyproject.toml** - Dependencies with flexible ranges:
-```toml
-[project]
-name = "my-api"
-version = "1.0.0"
-requires-python = ">=3.11"
-dependencies = [
-    "fastapi>=0.104,<0.105",
-    "uvicorn>=0.24,<0.25",
-    "numpy>=1.24,<2",        # C extensions
-    "psycopg2>=2.9,<3",      # Needs libpq-dev
-]
-
-[dependency-groups]
-dev = ["pytest==7.4.3", "ruff==0.1.5", "mypy==1.7.0"]
-```
-
-**uv.lock** pins exact versions (e.g., `fastapi==0.104.1`) for reproducibility.
-
-### Development Commands
-```bash
-uv sync                    # Setup environment
-uv run pytest             # Run tests
-uv run uvicorn src.my_api.main:app --reload
-```
-
-### Dockerfile - Production Deployment
-```dockerfile
-# Multi-stage build
-FROM python:3.11.7-slim as builder
-
-# Install build dependencies
-RUN apt-get update && apt-get install -y \
-    gcc g++ python3-dev libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN pip install uv==0.1.5
-
-WORKDIR /app
-COPY pyproject.toml uv.lock ./
-RUN uv sync --frozen --no-group dev --no-install-project
-
-# Final stage
-FROM python:3.11.7-slim
-RUN useradd -m -u 1000 appuser
-
-WORKDIR /app
-COPY --from=builder /app/.venv /app/.venv
-COPY src/ ./src/
-
-ENV PATH="/app/.venv/bin:$PATH"
-USER appuser
-
-CMD ["uvicorn", "src.my_api.main:app", "--host", "0.0.0.0", "--port", "8000"]
-```
-
-### Why This Pattern Works
-
-**Key Benefits**:
-- **⚡ Fast local development**: `uv sync` in seconds, no Docker overhead
-- **🛠️ Full IDE integration**: Debuggers, profilers work natively
-- **🔄 Instant iteration**: Change code → test immediately
-- **🐳 Production parity**: Docker ensures deployment consistency
-- **📦 Single source of truth**: `uv.lock` pins versions everywhere
+The key insight is **tool specialization by layer**:
+- **Choose tools based on which layers you need to control**
+- **Avoid mixing incompatible tools** (conda + uv)
+- **Leverage multi-layer tools** (uv for layers 4-6) when possible
+- **Separate concerns** (Docker for infrastructure, uv for Python)
 
 ## Java vs Python: Environment Management Context
 
@@ -220,5 +143,5 @@ This detailed reference covers:
 
 ---
 
-**Next Section**: [05-library-repository-structure.md](05-library-repository-structure.md) - Modern library structure and organization
+**Next Section**: [05-application-example-docker-uv.md](05-application-example-docker-uv.md) - Complete Docker + uv application example
 **Previous Section**: [03-environment-architecture-layers.md](03-environment-architecture-layers.md) - Environment architecture layers

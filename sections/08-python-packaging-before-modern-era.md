@@ -408,5 +408,5 @@ The stage was set for a revolution. Python needed to modernize or risk losing de
 
 ---
 
-**Next Section**: [08-python-evolution-modern-tools.md](08-python-evolution-modern-tools.md) - The Python packaging renaissance
-**Previous Section**: [06-module-subpackage-design.md](06-module-subpackage-design.md) - Module & subpackage design
+**Next Section**: [09-python-evolution-modern-tools.md](09-python-evolution-modern-tools.md) - The Python packaging renaissance
+**Previous Section**: [07-module-subpackage-design.md](07-module-subpackage-design.md) - Module & subpackage design

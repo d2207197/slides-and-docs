@@ -440,5 +440,5 @@ uv publish
 
 ---
 
-**Previous Section**: [07-python-packaging-before-modern-era.md](07-python-packaging-before-modern-era.md) - The Wild West years
+**Previous Section**: [08-python-packaging-before-modern-era.md](08-python-packaging-before-modern-era.md) - The Wild West years
 **Next Section**: [appendix-tools-reference.md](appendix-tools-reference.md) - Quick reference guide
