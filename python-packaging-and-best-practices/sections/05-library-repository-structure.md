@@ -367,23 +367,26 @@ uv run twine check dist/* # Verify packages are valid
 ### Build and Release Workflow
 
 ```bash
-# 1. Prepare release
-# Update version in pyproject.toml
-# Update CHANGELOG.md
-# Commit changes
+# 1. Update version automatically
+uv version --bump patch      # 0.1.0 → 0.1.1
+uv version --bump minor      # 0.1.1 → 0.2.0  
+uv version 1.0.0             # Set exact version
 
-# 2. Build distribution packages
-uv build
+# 2. Build and publish
+uv build                     # Creates .tar.gz and .whl in dist/
+uv publish                   # Upload to PyPI (requires PyPI token)
 
-# 3. Verify packages
-uv run twine check dist/*
+# 3. Tag release and verify
+git tag v$(uv version --output=plain)
+git push origin --tags
 
-# 4. Upload to PyPI
-uv run twine upload dist/*
+# 4. Test installation
+uv run --with my-awesome-library --no-project -- python -c "import my_awesome_library"
+```
 
-# 5. Tag release
-git tag v0.1.0
-git push origin v0.1.0
+**Quick Setup**: Set PyPI token as environment variable:
+```bash
+export UV_PUBLISH_TOKEN="pypi-your-token-here"
 ```
 
 ### What Gets Distributed
