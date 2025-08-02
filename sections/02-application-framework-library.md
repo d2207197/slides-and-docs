@@ -6,18 +6,21 @@ graph TB
         Code[Your Code]
         Library[Library]
 
-        Code -->|"Code calls library"| Library
-        Code -->|"Code calls library"| Lib2
+        Code -->|"Code calls lib"| Library
+        Code -->|"Code calls lib"| Lib2
 
         subgraph Framework_Container ["Framework"]
             Framework[Framework logic]
             Lib1[Library]
             Lib2[Library]
+            Lib3[Library]
 
             Framework --> Lib1
             Framework --> Lib2
+            Framework --> Lib3
         end
 
+        Library -->|"Lib calls other lib"| Lib3
         Framework -->|"Framework calls code"| Code
     end
 
@@ -26,18 +29,18 @@ graph TB
     style Library fill:#ba68c8,stroke:#7b1fa2,stroke-width:2px
     style Lib1 fill:#ffd54f,stroke:#fbc02d,stroke-width:2px
     style Lib2 fill:#ffd54f,stroke:#fbc02d,stroke-width:2px
+    style Lib3 fill:#ffd54f,stroke:#fbc02d,stroke-width:2px
     style Framework_Container fill:#e3f2fd,stroke:#1565c0,stroke-width:3px
     style Application_Container fill:#ffebee,stroke:#d84315,stroke-width:3px
 ```
 
-| Type | Who Controls | Environment Needs | Example |
-|------|--------------|-------------------|---------|
-| **Library** | **You** control when/how | Broad compatibility | `pandas`, `requests` |
-| **Framework** | **It** calls your code | Plugin ecosystem | `Django`, `Flask` |
-| **Application** | **Self-contained** | Target-specific | `jupyter`, `black` |
-| **Hybrid** | **Dual interface** | Both broad & targeted | `pytest`, `pip` |
+| Type | Who Controls | Environment Needs | Python Examples | Java Examples |
+|------|--------------|-------------------|-----------------|---------------|
+| **Library** | **You** control when/how call it| Broad compatibility | `pandas`, `requests` | `Guava`, `Jackson` |
+| **Framework** | **It** calls your code | Plugin ecosystem | `Django`, `Flask` | `Spring`, `Hibernate` |
+| **Application** | **Self-contained** | Varies by distribution | `jupyter`, `black` | `Maven`, `IntelliJ` |
+| **Hybrid** | **Dual interface** | Both broad & targeted | `pytest`, `pip` | `Tomcat`, `Gradle` |
 
-**Key Insight**: Environment isolation needs vary dramatically by type
 
 ## Code Examples: How Each Type Works
 
@@ -56,43 +59,30 @@ if __name__ == "__main__":
     app.run()  # Runs independently
 ```
 
-## Environment Adaptability: Breadth vs Depth
-
-| Type | Environment Requirements | Reusability Goal | Example |
-|------|-------------------------|------------------|---------|
-| **Library** | Works in many diverse contexts | **High reusability** | pandas works with Django, Flask, Jupyter, scripts |
-| **Framework** | Supports various plugins/extensions | **High reusability** | pytest works with different test types and projects |
-| **Application** | Works in specific target environment(s) | **Specific functionality** | Jupyter: optimized for data science workflows |
-
-**Key Principle:**
-- **Libraries & Frameworks**: Must adapt to **broad, diverse environments** for maximum reusability
-- **Applications**: Only need to work **deeply** in their **specific target environment(s)**
-
-## Popular Examples: Python & Java
-
-| Type | Python Examples | Java Examples | What They Do |
-|------|----------------|---------------|---------------|
-| **Libraries** | `requests`, `pandas`, `numpy` | `Guava`, `Jackson`, `Commons` | You import and call functions |
-| **Frameworks** | `Django`, `Flask`, `pytest` | `Spring`, `Hibernate`, `JUnit` | They call your code |
-| **Applications** | `black`, `jupyter`, `mypy` | `Maven`, `Jenkins`, `IntelliJ` | Standalone executables |
-| **Hybrid** | `pip`, `sphinx`, `dask` | `Tomcat`, `Jetty`, `Gradle` | Can be imported OR run directly |
-
-
-
 ## Environment Control & Dependency Strategy
 
-| Type | Environment Control | Version Strategy | Testing Focus | Real Example |
-|------|-------------------|------------------|---------------|--------------|
-| **Library** | ❌ **No Control** - Shared environments | `numpy>=1.20,<2.0` | Integration tests | `requests` works everywhere |
-| **Framework** | 🔸 **Partial Control** - Plugin ecosystems | `django>=3.2,<5.0` | Plugin compatibility | `pytest` supports test types |
-| **Application** | ✅ **Full Control** - Own environments | `pandas==2.1.3` | **End-to-end tests** | `jupyter` controls dependencies |
+| Type | Environment Control | How they depend on `requests` | Impact of Wrong Choice |
+|------|-------------------|------------------|-------------------|
+| **Library** | ❌ **Minimal Control** - Shared environments | `requests>=2.20,<3.0` | Too strict → breaks other libraries |
+| **Framework** | 🔸 **Partial Control** - Manages plugin ecosystem | `requests>=2.25,<3.0` | Too strict → users can't build their apps upon |
+| **Application (Public)** | 🔸 **Partial Control** - Must work in user environments | `requests>=2.20,<3.0` | Too strict → users can't install |
+| **Application (Private)** | ✅ **Full Control** - Own environments | `requests==2.28.1` | Too loose → deployment inconsistency |
 
-**Key Insight**: Environment control level determines dependency flexibility needs
+**Key Insight**: Environment control level determines dependency flexibility needs, but **distribution model** can override this for applications.
 
 
 ## Key Takeaway
 
-**Testing responsibility drives dependency management strategy:**
-- **Libraries**: Only need integration tests → Maximum flexibility for broad compatibility
-- **Applications**: Must pass end-to-end tests → Minimal flexibility for stability & reproducibility
-- Applications are the final layer - no one wraps them, so they own complete functionality
+**The fundamental distinction: Who calls whom?**
+- **Libraries**: You call them → Simple, focused functionality
+- **Frameworks**: They call you → Control flow inversion, manage complexity
+- **Applications**: Self-contained → Handle complete workflows
+
+**Dependency management is about balancing compatibility vs stability:**
+- More flexibility → Better compatibility, less stability
+- More constraints → Better stability, worse compatibility
+- **Exception**: Simple tools with excellent test coverage can achieve both
+
+**Complexity drives environment control needs:**
+- **Libraries**: Usually simple → Can maintain both compatibility and stability
+- **Applications**: More complex → Need higher environment control to ensure reliability
