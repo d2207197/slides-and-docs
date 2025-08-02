@@ -10,42 +10,52 @@ Understanding these layers helps us choose the right tools and strategies for di
 
 ---
 config:
-  markdownAutoWrap: false
-  # look: handDrawn
-  # htmlLabels: false
-  wrap: false
-  fontSize: 123
+
+  flowchart:
+    subGraphTitleMargin:
+      top: 0
+      bottom: 30
+    defaultRenderer: elk
+    rankSpacing: 70
 ---
-
 graph TB
-    subgraph Hardware["(1) Hardware (AWS EC2)"]
-        ContainerTool["Container Tool"] -->|creates|OS
-        subgraph OS ["(2) Operating System (Ubuntu 24.04)"]
+    subgraph Hardware["(1) Hardware Infrastructure"]
+        subgraph OS ["(2) Operating System"]
             direction TB
-
-            SysPkg["(3) System Packages
-            1. python3-dev + gcc
-            2. libjpeg-dev + zlib1g-dev"]
-            RuntimeManager["Language Runtime Manager(misc, asdf, pyenv)"] -->|install| Runtime1
-            SysPkg -->|"support"|DependencyConf
-            subgraph Runtime1 ["(4) Runtime: Python 3.12"]
-
-                    RuntimeEnvManagement["Runtime Env Manager(venv)"] -->|creates|Env1
-                    DependencyConf["Package manager(pip)"] -->|installs|numpy1
-                    DependencyConf -->|installs|pillow
-                    subgraph Env1 ["(5) Runtime Environment"]
-                            numpy1[numpy==1.26.2<br/>↳ needs: python3-dev, gcc]
-                            pillow[Pillow==10.1.0<br/>↳ needs: libjpeg-dev, zlib1g-dev]
+            SysPkg["(3) System Dependencies<br/>python3-dev, gcc, libjpeg-dev"]
+            subgraph Runtime1 ["`(4) Language Runtime: Python 3.12`"]
+                direction TB
+                subgraph Env1 ["`(5) Runtime Environment: venv`"]
+                    direction TB
+                    subgraph DepMgmt ["`(6) Dependency Management`"]
+                        direction TB
+                        numpy1["numpy==1.26.2<br/>↳ requires: python3-dev, gcc"]
+                        pillow["Pillow==10.1.0<br/>↳ requires: libjpeg-dev"]
                     end
                 end
+            end
         end
     end
+
+    %% Tool annotations (outside the containment)
+    CloudProvider["☁️ AWS/Google Cloud<br/>(manages layer 1)"]
+    ContainerTool["🐳 Docker<br/>(manages layers 2-3)"]
+    RuntimeManager["🐍 pyenv/mise/uv<br/>(manages layer 4)"]
+    EnvManager["📦 venv/uv<br/>(manages layer 5)"]
+    PackageManager["📦 pip/uv<br/>(manages layer 6)"]
+
+    CloudProvider -.->|"provisions"| Hardware
+    ContainerTool -.->|"controls"| OS
+    RuntimeManager -.->|"installs"| Runtime1
+    EnvManager -.->|"creates"| Env1
+    PackageManager -.->|"installs"| DepMgmt
 
     style Hardware fill:#ffebee,stroke:#d84315,stroke-width:4px
     style OS fill:#e3f2fd,stroke:#1565c0,stroke-width:3px
     style SysPkg fill:#e8f5e8,stroke:#2e7d32,stroke-width:3px
     style Runtime1 fill:#fff3e0,stroke:#f57c00,stroke-width:2px
     style Env1 fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style DepMgmt fill:#fce4ec,stroke:#c2185b,stroke-width:2px
 ```
 
 **Key Insight**: Each layer wraps and contains the next - showing how isolation works through nested containment.
@@ -136,12 +146,12 @@ Connecting back to the **Application vs Framework vs Library** concepts, here's 
 
 | Environment Layer | 📚 **Library** | 🔧 **Framework** | 🎯 **Application** |
 |-------------------|----------------|------------------|-------------------|
-| **6. Dependency Management** | 🔸<br/>Wide version ranges | 🔸<br/>Define plugin contracts | 🎯<br/>Pin exact versions |
-| **5. Runtime Environment** | 🌐<br/>Work across isolation types | 🔸<br/>Provide isolation options | 🎯<br/>Choose optimal isolation |
-| **4. Language Runtime** | 🌐<br/>Support multiple versions | 🔸<br/>Define supported range | 🎯<br/>Pin optimal version |
-| **3. System Dependencies** | 🌐<br/>Minimal system requirements | 🌐<br/>Avoid system dependencies | 🔸<br/>Control via containers |
-| **2. Operating System** | 🌐<br/>Cross-platform compatibility | 🌐<br/>Cross-platform support | 🔸<br/>Target specific OS |
 | **1. Hardware Infrastructure** | 🌐<br/>Architecture independence | 🌐<br/>Architecture independence | 🌐<br/>Hardware abstraction |
+| **2. Operating System** | 🌐<br/>Cross-platform compatibility | 🌐<br/>Cross-platform support | 🔸<br/>Target specific OS |
+| **3. System Dependencies** | 🌐<br/>Minimal system requirements | 🌐<br/>Avoid system dependencies | 🔸<br/>Control via containers |
+| **4. Language Runtime** | 🌐<br/>Support multiple versions | 🔸<br/>Define supported range | 🎯<br/>Pin optimal version |
+| **5. Runtime Environment** | 🌐<br/>Work across isolation types | 🔸<br/>Provide isolation options | 🎯<br/>Choose optimal isolation |
+| **6. Dependency Management** | 🔸<br/>Wide version ranges | 🔸<br/>Define plugin contracts | 🎯<br/>Pin exact versions |
 
 ## Key Insights
 
