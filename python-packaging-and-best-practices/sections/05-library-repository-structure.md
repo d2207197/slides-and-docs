@@ -140,15 +140,14 @@ graph LR
 
 ### Tool Ecosystem Matrix
 
-| Tool | Build Backend | Project Management | Key Strengths | Best For |
-|------|---------------|-------------------|---------------|----------|
-| **setuptools** | ✅ `setuptools>=61` | 🔧 Basic | Traditional, broad compatibility | Legacy projects, C extensions |
-| **hatchling** | ✅ `hatchling` | ❌ | Modern, fast, simple | Most new libraries |
-| **flit** | ✅ `flit_core` | 🔧 Basic | Minimalist, pure Python | Simple libraries |
-| **uv** | ❌ | ✅ Full | Speed (10-100x), integrated Python | Fast development |
-| **poetry** | ✅ `poetry-core` | ✅ Full | All-in-one solution | Complete ecosystem |
-| **pdm** | ✅ `pdm-backend` | ✅ Full | Standards-compliant | Modern, PEP-focused |
-| **hatch** | ✅ `hatchling` | ✅ Full | Rich features, build matrices | Complex workflows |
+| Tool | Build Backend | Project Management | Backend Strengths | Management Strengths |
+|------|---------------|-------------------|-------------------|---------------------|
+| **setuptools** | ✅ `setuptools>=61` | 🔧 Basic | C extensions, legacy compatibility | Basic pip wrapper |
+| **flit** | ✅ `flit_core` | 🔧 Basic | Minimal config, pure Python | Simple publishing |
+| **uv** | ❌ | ✅ Full | — | 10-100x speed, Python management |
+| **poetry** | ✅ `poetry-core` | ✅ Full | Integrated with Poetry | Complete workflow, mature resolver |
+| **pdm** | ✅ `pdm-backend` | ✅ Full | Standards-compliant | PEP 582, modern approach |
+| **hatch** | ✅ `hatchling` | ✅ Full | Fast builds, plugins | Environment matrices, rich features |
 
 **💡 Modern Recommendations**:
 - **Most libraries**: `uv` (project management) + `hatchling` (build backend)
@@ -191,37 +190,22 @@ license = {text = "MIT"}
 authors = [
     {name = "Your Name", email = "you@example.com"}
 ]
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
     "requests>=2.25.0,<3.0.0",
     "typer>=0.9.0,<1.0.0",
 ]
 
-[project.optional-dependencies]
-dev = [
-    "pytest>=7.0.0",
-    "black>=22.0.0",
-    "ruff>=0.1.0",
-]
-docs = [
-    "mkdocs>=1.4.0",
-    "mkdocs-material>=8.0.0",
-]
-
 [project.urls]
 Homepage = "https://github.com/username/my-awesome-library"
 Documentation = "https://my-awesome-library.readthedocs.io"
-Repository = "https://github.com/username/my-awesome-library.git"
-Issues = "https://github.com/username/my-awesome-library/issues"
+# Other URL types: Repository, Issues, Changelog, Funding, etc.
 
 [build-system]
 requires = ["hatchling"]
@@ -250,12 +234,6 @@ dependencies = [
 ]
 ```
 
-**Why Flexible Ranges Matter**:
-- **Compatibility**: Works with more user environments
-- **Security**: Users can get security updates
-- **Ecosystem health**: Reduces dependency conflicts
-- **Future-proofing**: Compatible with newer versions
-
 ### Understanding optional-dependencies
 
 ```toml
@@ -263,11 +241,7 @@ dependencies = [
 # For end users who want extra features
 plotting = ["matplotlib>=3.5.0", "seaborn>=0.11.0"]
 async = ["aiohttp>=3.8.0", "asyncio-mqtt>=0.11.0"]
-
-# For developers working on the library
-dev = ["pytest>=7.0.0", "black>=22.0.0", "ruff>=0.1.0"]
-test = ["pytest>=7.0.0", "coverage>=6.0.0", "pytest-cov>=4.0.0"]
-docs = ["mkdocs>=1.4.0", "mkdocs-material>=8.0.0"]
+all = ["my-awesome-library[plotting,async]"]  # Convenience: install everything
 ```
 
 **Installation Examples**:
@@ -275,14 +249,12 @@ docs = ["mkdocs>=1.4.0", "mkdocs-material>=8.0.0"]
 # Basic installation
 pip install my-awesome-library
 
-# With plotting features
+# With specific features
 pip install my-awesome-library[plotting]
+pip install my-awesome-library[async]
 
-# With all optional features
-pip install my-awesome-library[plotting,async]
-
-# Development installation
-pip install my-awesome-library[dev,test,docs]
+# With all optional features (easy way!)
+pip install my-awesome-library[all]
 ```
 
 ### Understanding optional-dependencies vs dependency-groups
