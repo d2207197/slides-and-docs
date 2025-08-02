@@ -1,208 +1,200 @@
-# Section 05: Library Repository Structure & pyproject.toml Design
+# Section 05: Library Repository Structure & Design
 
 > How modern Python libraries organize code and define metadata for maximum reusability
 
-## Learning Objectives
+## What Makes a Good Python Library
 
-- Understand standard Python library repository structure
-- Master pyproject.toml design for library projects
-- Compare uv and hatch approaches for library development
-- Design effective module and subpackage organization
-- Learn library distribution and publishing workflows
-- Apply environment control principles to library structure
+Successful libraries share four key traits:
 
-## The Big Picture: Library vs Application Development
+### 🌐 **Maximum Compatibility**
+- **Flexible dependencies**: `>=1.0,<2.0` not `==1.5.3`
+- **Multi-Python support**: 3.8-3.12+
+- **Cross-platform**: Windows/macOS/Linux
 
-Before diving into technical details, let's understand the fundamental difference that drives **every** design decision:
+### 🔧 **Easy Integration**
+- **Simple install**: `pip install your-library`
+- **Pythonic API**: `library.process(data)`
+- **Stable interfaces**: Semantic versioning
+
+### 📦 **Professional Quality**
+- **Robust testing**: Matrix testing across environments
+- **Rich metadata**: Clear PyPI descriptions
+- **Active maintenance**: Regular updates
+
+### 🚀 **Performance Focus**
+- **Minimal overhead**: Fast imports, lazy loading
+- **Optional features**: `pip install lib[extras]`
+- **Memory efficient**: No leaks or bloat
+
+**Key Insight**: Libraries succeed by being **helpful but unobtrusive**.
+
+## Library Development & Distribution Flow
+
+Libraries follow a unique development pattern focused on **reusability** and **easy installation**:
+
+```mermaid
+graph TD
+    A[📝 Write Library Code] --> B[🔧 Build Package]
+    B --> C[✅ Test Compatibility]
+    C --> D[📦 Distribute to PyPI]
+    D --> E[🌍 Users Install Easily]
+
+    A --> A1["src/ layout<br/>Flexible dependencies<br/>Multi-Python support"]
+    B --> B1["Source dist + Wheel<br/>Rich metadata<br/>Built packages"]
+    C --> C1["Matrix testing<br/>Multiple environments<br/>Version compatibility"]
+    D --> D1["Public registry<br/>Semantic versioning<br/>Clear documentation"]
+    E --> E1["pip install library<br/>Cross-platform<br/>Dependency resolution"]
+
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+```
+
+**Key Flow Characteristics**:
+- **Build once, install everywhere**: Single package works across platforms
+- **Version compatibility**: Users can upgrade independently
+- **Dependency resolution**: Package managers handle conflicts
+- **Easy discovery**: Public registry with rich metadata
+
+## High-Level Library Project Structure
+
+Before diving into details, here's the bird's eye view of how libraries are organized:
+
+```
+my-awesome-library/                    # Repository root (kebab-case)
+├── pyproject.toml                     # Modern Python project configuration
+├── README.md                          # First impression for users
+├── LICENSE                            # Legal usage terms
+├── src/                               # Source code directory
+│   └── my_awesome_library/            # Python package (snake_case, import my_awesome_library)
+│       ├── __init__.py                # Package entry point
+│       ├── core.py                    # Main functionality
+│       └── utils.py                   # Helper functions
+├── tests/                             # Test suite (mirrors src structure)
+│   ├── __init__.py                    # Test package
+│   ├── test_core.py                   # Tests for core.py
+│   └── test_utils.py                  # Tests for utils.py
+├── docs/                              # Documentation (built with Sphinx/MkDocs)
+│   ├── index.md                       # Documentation home
+│   └── api.md                         # API reference
+└── .github/workflows/                 # CI/CD automation
+```
+
+### Key Components and Design
+
+**🎯 src/ Layout** (Modern Best Practice):
+- **Prevents accidental imports**: Avoids adding library folder to sys.path during development
+- **Standard since 2020+**: Most new libraries use this pattern
+
+**📋 pyproject.toml** (Replaces setup.py):
+- **Modern standard**: Completely replaces legacy setup.py
+- **Universal tool support**: uv, hatch, pip, black, ruff, pytest all use this file
+- **Single configuration center**: One file for all project settings
+
+**🔤 Naming Convention**:
+- **Repository**: `my-awesome-library` (kebab-case for URLs/Git)
+- **Package**: `my_awesome_library` (snake_case for Python imports)
+- **Same name**: Only case format differs, content identical
+
+**🧪 tests/ Structure**:
+- **Mirror src/ layout**: `test_core.py` tests `core.py`, `test_utils.py` tests `utils.py`
+
+**📚 docs/ Documentation**:
+- **Built with tools**: Sphinx, MkDocs, or similar for web-based documentation
+- **Auto-generated**: API docs from docstrings, manual guides
+
+## pyproject.toml Fundamentals
+
+The `pyproject.toml` file is the modern standard for Python project configuration. Before diving into configuration details, it's crucial to understand how different tools work together.
+
+### Understanding Build Backends vs Project Management Tools
+
+Python packaging involves two distinct tool types that often get confused:
+
+**📦 Build Backends** - Generate installable packages:
+- Transform source code into distributable packages (.whl, .tar.gz)
+- Handle compilation, asset bundling, metadata generation
+- **Examples**: `hatchling`, `setuptools`, `flit-core`, `poetry-core`
+
+**🛠️ Project Management Tools** - Manage dependencies and workflow:
+- Handle dependency resolution and virtual environments
+- Coordinate development tasks and call build backends
+- **Examples**: `uv`, `poetry`, `hatch`, `pdm`, `pip-tools`
+
+### How They Work Together
 
 ```mermaid
 graph LR
-    A[Libraries] --> B[Shared Resources]
-    B --> C[Need Flexibility]
-    C --> D[Flexible Dependencies<br/>src/ Layout<br/>Multiple Python Versions]
+    A[uv build] --> B[reads pyproject.toml<br/>build-system section]
+    B --> C[calls hatchling]
+    C --> D[generates .whl/.tar.gz]
     
-    E[Applications] --> F[Controlled Environment]
-    F --> G[Can Be Strict]
-    G --> H[Pinned Dependencies<br/>Flat Layout<br/>Single Python Version]
-    
-    style A fill:#66bb6a
-    style E fill:#42a5f5
-    style D fill:#ffa726
-    style H fill:#ffa726
+    style A fill:#42a5f5
+    style C fill:#ff6b6b
+    style D fill:#66bb6a
 ```
 
-**Key Insight**: Libraries have **no environment control** → Must work in many different environments
+**Key Point**: `uv` is **not** a build tool - it's an interface that calls the actual build backend!
 
-**What This Means**:
-- Your library will be installed alongside other libraries
-- Users control the Python version, not you
-- Dependency conflicts are your responsibility to avoid
-- Testing must verify compatibility across environments
-
-This principle explains **why** we make specific structural choices throughout this section.
-
-## Repository Structure for Python Libraries
-
-### Standard Library Layout
-
-```
-my-awesome-library/                    # Library structure
-├── src/                               # Libraries use src/ layout for testing isolation
-│   └── my_awesome_library/            # Package will be pip-installable
-│       ├── __init__.py
-│       ├── core.py
-│       ├── utils.py
-│       └── preprocessing/             # Subpackage example
-│           ├── __init__.py
-│           ├── text.py
-│           ├── numerical.py
-│           └── validation.py
-├── tests/                             # Mirror source structure
-│   ├── conftest.py
-│   ├── test_core.py
-│   ├── test_utils.py
-│   └── test_preprocessing/
-│       ├── test_text.py
-│       ├── test_numerical.py
-│       └── test_validation.py
-├── docs/
-│   ├── conf.py
-│   ├── index.md
-│   └── api.md
-├── pyproject.toml                     # Modern Python packaging
-├── README.md
-├── LICENSE
-├── CHANGELOG.md
-└── .gitignore
-```
-
-### Why This Structure?
-
-| Component | Purpose | Environment Control Impact |
-|-----------|---------|---------------------------|
-| `src/` layout | **For libraries**: Prevents accidental imports during testing.<br>*Applications use flat layout since they aren't pip-installed* | Enforces clean namespace |
-| `tests/` separate | Clear separation of concerns, mirrors source structure | Tests run in different environments |
-| `docs/` | Centralized documentation | May have own dependencies |
-| `pyproject.toml` | Single source of truth | Defines dependency flexibility |
-
-
-### The `src/` Layout Advantage (For Libraries)
-
-```python
-# Library with src/ layout (recommended)
-my_library/
-├── src/                 # Package is isolated in src/
-│   └── my_library/      # Can't be imported without installation
-│       └── core.py
-└── tests/
-    └── test_core.py     # Forces proper package installation
-
-# Application (flat layout is fine)
-my_app/
-├── my_app/              # Not installed via pip
-│   └── main.py
-└── tests/               # No import isolation needed
-```
-
-## pyproject.toml: The Heart of Modern Python Libraries
-
-### Understanding Python Tool Categories
-
-Before diving into pyproject.toml structure, it's crucial to understand that Python packaging tools fall into **two distinct categories**:
-
-> 🔧 **Key Insight**: Understanding this distinction will clarify 90% of Python tooling confusion!
-
-<div style="background-color: #e3f2fd; padding: 15px; border-left: 4px solid #2196f3; margin: 10px 0;">
-
-**1. 📦 Build Backend** - Creates distribution packages (wheels/sdist)
-- Reads your source code and pyproject.toml
-- Generates installable packages for PyPI
-- **Examples**: `hatchling`, `setuptools`, `flit_core`
-
-**2. 🛠️ Project Management** - Manages dependencies and development workflow  
-- `uv add numpy` - adds dependencies to pyproject.toml
-- `uv sync` - creates virtual environment and installs dependencies
-- `uv build` - calls the build backend to create packages
-- **Examples**: `uv`, `poetry`, `hatch`, `pdm`
-
-</div>
-
-**The Modern Recommendation**: `uv` (project management) + `hatchling` (build backend)
-
-#### Python Packaging Tool Categories
+### Tool Ecosystem Matrix
 
 | Tool | Build Backend | Project Management | Key Strengths | Best For |
 |------|---------------|-------------------|---------------|----------|
-| **setuptools** | ✅ `setuptools>=61` | 🔧 Basic | Traditional, broad compatibility | Legacy projects |
-| **flit** | ✅ `flit_core` | 🔧 Basic | Minimalist | Simple pure-Python |
-| **uv** | ❌ | ✅ Full | Speed (10-100x), no lock-in | Fast development |
-| **poetry** | ✅ `poetry-core` | ✅ Full | Integrated solution | All-in-one experience |
-| **pdm** | ✅ `pdm-backend` | ✅ Full | Standards-compliant | Modern development |
-| **hatch** | ✅ `hatchling` | ✅ Full | Rich features, matrices | Complex workflows |
-| **pip-tools** | ❌ | 🔧 Partial | Dependency resolution | Minimalist locking |
-| **twine** | ❌ | 🔧 Publishing | Secure uploads | PyPI publishing |
+| **setuptools** | ✅ `setuptools>=61` | 🔧 Basic | Traditional, broad compatibility | Legacy projects, C extensions |
+| **hatchling** | ✅ `hatchling` | ❌ | Modern, fast, simple | Most new libraries |
+| **flit** | ✅ `flit_core` | 🔧 Basic | Minimalist, pure Python | Simple libraries |
+| **uv** | ❌ | ✅ Full | Speed (10-100x), integrated Python | Fast development |
+| **poetry** | ✅ `poetry-core` | ✅ Full | All-in-one solution | Complete ecosystem |
+| **pdm** | ✅ `pdm-backend` | ✅ Full | Standards-compliant | Modern, PEP-focused |
+| **hatch** | ✅ `hatchling` | ✅ Full | Rich features, build matrices | Complex workflows |
 
-### Understanding the Build System
+**💡 Modern Recommendations**:
+- **Most libraries**: `uv` (project management) + `hatchling` (build backend)
+- **Complex builds**: `hatch` (both project management and build backend)
+- **Legacy/C extensions**: `uv` + `setuptools` (with careful migration planning)
 
-> 💡 **Critical Concept**: How Project Management Tools and Build Backends Work Together
+### Configuration Sections
 
-#### How `uv build` Actually Works
-
-```mermaid
-graph LR
-    A[uv build<br/>🛠️ Project Manager] --> B[reads build-system<br/>from pyproject.toml]
-    B --> C[calls hatchling<br/>📦 Build Backend]
-    C --> D[reads tool.hatch.*<br/>from pyproject.toml]
-    D --> E[wheel + sdist<br/>📦 Packages]
-
-    style A fill:#42a5f5,stroke:#1976d2,stroke-width:3px
-    style C fill:#ff6b6b,stroke:#d32f2f,stroke-width:3px
-    style E fill:#66bb6a,stroke:#388e3c,stroke-width:3px
-```
-
-<div style="background-color: #fff3e0; padding: 10px; border-left: 4px solid #ff6f00; margin: 10px 0;">
-
-**🎯 Key Point**: `uv` is **not** a build tool - it's an interface that calls the actual build backend!
-
-</div>
-
-#### Key Concept: Different Tools, Different Configuration Sections
+Different tools read different sections in pyproject.toml:
 
 ```toml
 [build-system]
-build-backend = "hatchling.build"  # Tells uv which backend to call
+build-backend = "hatchling.build"  # Tells project managers which backend to call
+
+[project]  # Standard metadata - all tools understand this
+name = "my-library"
+version = "0.1.0"
 
 [tool.hatch.*]           # Hatchling's configuration
-[tool.setuptools.*]      # Setuptools' configuration
-[tool.poetry.*]          # Poetry's configuration
+[tool.setuptools.*]      # Setuptools' configuration  
 [tool.uv.*]              # uv's configuration (development only)
+[tool.poetry.*]          # Poetry's configuration
 ```
 
-**Important**: Each tool reads its own `[tool.toolname.*]` section in pyproject.toml.
+**Important**: Each tool reads its own `[tool.toolname.*]` section. Project managers coordinate but don't interfere with build backend settings.
+
+## pyproject.toml Configuration for Libraries
+
+Here's how to design pyproject.toml specifically for libraries:
 
 ### Basic Structure
 
 ```toml
-[build-system]
-requires = ["hatchling"]  # or ["setuptools>=61", "wheel"]
-build-backend = "hatchling.build"
-
 [project]
 name = "my-awesome-library"
 version = "0.1.0"
-description = "A library that does awesome things"
+description = "A fantastic library that solves X problem"
 readme = "README.md"
-requires-python = ">=3.8"
 license = {text = "MIT"}
 authors = [
-    {name = "Your Name", email = "you@example.com"},
+    {name = "Your Name", email = "you@example.com"}
 ]
-keywords = ["awesome", "library", "python"]
+requires-python = ">=3.8"
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -210,422 +202,229 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
-    "numpy>=1.20,<2.0",  # Flexible: library has no environment control
-    "requests>=2.25",
-    "pydantic>=2.0,<3.0",
+    "requests>=2.25.0,<3.0.0",
+    "typer>=0.9.0,<1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "black>=22.0.0",
+    "ruff>=0.1.0",
+]
+docs = [
+    "mkdocs>=1.4.0",
+    "mkdocs-material>=8.0.0",
 ]
 
 [project.urls]
-Homepage = "https://your-company.com/my-awesome-library"
-Documentation = "https://docs.your-company.com/my-awesome-library"
-Repository = "https://git.your-company.com/my-awesome-library"
-Issues = "https://tickets.your-company.com/my-awesome-library"
+Homepage = "https://github.com/username/my-awesome-library"
+Documentation = "https://my-awesome-library.readthedocs.io"
+Repository = "https://github.com/username/my-awesome-library.git"
+Issues = "https://github.com/username/my-awesome-library/issues"
 
-# Build backend configuration - tells the build tool where to find source code
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [tool.hatch.build.targets.wheel]
-packages = ["src/my_awesome_library"]  # For hatchling
-
-# Alternative: if using setuptools
-# [tool.setuptools.packages.find]
-# where = ["src"]
+packages = ["src/my_awesome_library"]
 ```
 
-### Library Dependency Specification: Flexible vs Restrictive
+### Library-Specific Dependency Strategy
 
-Remember from Section 02: **Libraries have no environment control**, so they must use flexible version constraints:
+**✅ Good: Flexible Version Ranges**
+```toml
+dependencies = [
+    "requests>=2.25.0,<3.0.0",    # Allow patch and minor updates
+    "typer>=0.9.0,<1.0.0",        # Compatible range
+    "numpy>=1.20.0,<2.0.0",       # Avoid breaking changes
+]
+```
+
+**❌ Bad: Overly Restrictive**
+```toml
+dependencies = [
+    "requests==2.28.1",           # Too specific, causes conflicts
+    "click>=8.1.7,<8.2.0",       # Unnecessary restrictions
+]
+```
+
+**Why Flexible Ranges Matter**:
+- **Compatibility**: Works with more user environments
+- **Security**: Users can get security updates
+- **Ecosystem health**: Reduces dependency conflicts
+- **Future-proofing**: Compatible with newer versions
+
+### Understanding optional-dependencies
 
 ```toml
-# ❌ BAD: Overly restrictive for libraries
-dependencies = [
-    "numpy==1.21.0",        # Too restrictive! Conflicts with user's numpy
-    "requests~=2.28.0",     # Unnecessarily narrow version range
-]
+[project.optional-dependencies]
+# For end users who want extra features
+plotting = ["matplotlib>=3.5.0", "seaborn>=0.11.0"]
+async = ["aiohttp>=3.8.0", "asyncio-mqtt>=0.11.0"]
 
-# ✅ GOOD: Flexible version ranges for libraries
-dependencies = [
-    "numpy>=1.20,<2.0",     # Major version constraint
-    "requests>=2.25",       # Minimum version only  
-    "pydantic>=2.0,<3.0",   # Known breaking changes at major versions
-]
+# For developers working on the library
+dev = ["pytest>=7.0.0", "black>=22.0.0", "ruff>=0.1.0"]
+test = ["pytest>=7.0.0", "coverage>=6.0.0", "pytest-cov>=4.0.0"]
+docs = ["mkdocs>=1.4.0", "mkdocs-material>=8.0.0"]
 ```
 
-**Why flexible constraints matter:**
-- Libraries install into **shared environments** with other packages
-- Restrictive versions cause dependency conflicts for users
-- Users should control exact versions, not libraries
+**Installation Examples**:
+```bash
+# Basic installation
+pip install my-awesome-library
+
+# With plotting features
+pip install my-awesome-library[plotting]
+
+# With all optional features
+pip install my-awesome-library[plotting,async]
+
+# Development installation
+pip install my-awesome-library[dev,test,docs]
+```
 
 ### Understanding optional-dependencies vs dependency-groups
 
-Python has two different standards for managing extra dependencies:
+Two standards exist for organizing extra dependencies - this shows how Python packaging evolves:
 
-| Feature | optional-dependencies (PEP 621) | dependency-groups (PEP 735) |
-|---------|--------------------------------|----------------------------|
-| **Purpose** | Extra features for end users | Development tools |
-| **Included in package** | ✅ Yes, in metadata | ❌ No |
-| **Installation** | `pip install pkg[extra]` | `uv sync --group dev` |
-| **Use cases** | Visualization, ML backends, DB drivers | Testing, linting, docs |
-| **Standard maturity** | Mature (2020) | New (2024) |
-| **pip support** | ✅ Install only | ✅ Since v25.1 (2025-04) |
-| **uv support** | ✅ Full support | ✅ Full support |
-| **Poetry support** | ✅ Since 2023 | 🔄 In progress |
-| **setuptools support** | ✅ Via pyproject.toml | ❌ Not supported |
+**📊 Standard Comparison**:
 
-#### For End Users: optional-dependencies (PEP 621)
+| Aspect | **optional-dependencies** (PEP 621) | **dependency-groups** (PEP 735) |
+|--------|-------------------------------------|----------------------------------|
+| **Purpose** | End-user features | Development workflows |
+| **Installation** | `pip install lib[feature]` | `uv sync --group test` |
+| **Status** | ✅ Stable (2021) | 🚧 New (2024) |
+
+**🔧 Tool Support Matrix**:
+
+| Tool | optional-dependencies | dependency-groups | Notes |
+|------|----------------------|-------------------|-------|
+| **uv** | ✅ Full support | ✅ Full support | Leading implementation |
+| **pip** | ✅ Full support | ❌ No support | Standard installer |
+| **Poetry** | ✅ Full support | ❌ No support | Uses own format |
+| **Hatch** | ✅ Full support | ⚠️ Partial | In development |
+| **PDM** | ✅ Full support | ✅ Full support | Early adopter |
+
+**💡 Best Practice**:
+- **Use optional-dependencies** for user-facing features (`pip install lib[plotting]`)
+- **Use dependency-groups** for development tools when supported (`uv sync --group test`)
+- **Check tool compatibility** before choosing - not all tools support latest PEPs
+
+**Example Configuration**:
 ```toml
 [project.optional-dependencies]
-viz = ["matplotlib>=3.5", "seaborn>=0.12"]  # pip install mylib[viz]
-ml = ["scikit-learn>=1.0", "pandas>=1.5"]   # pip install mylib[ml]
-docs = ["sphinx>=5.0", "sphinx-rtd-theme>=1.0"]
-```
+# For end users - widely supported
+plotting = ["matplotlib>=3.5.0", "seaborn>=0.11.0"] 
 
-#### For Developers: dependency-groups (PEP 735)
-```toml
 [dependency-groups]
-dev = [
-    "pytest>=7.0",
-    "pytest-cov>=4.0",
-    "mypy>=1.0",
-    "ruff>=0.1.0",
-]
-lint = ["ruff>=0.1.0", "mypy>=1.0"]
-test = ["pytest>=7.0", "pytest-cov>=4.0", "pytest-xdist>=3.0"]
-docs = ["sphinx>=5.0", "mkdocs>=1.5"]
+# For developers - newer standard, check tool support
+test = ["pytest>=7.0.0", "coverage>=6.0.0"]
+docs = ["sphinx>=4.0.0", "furo>=2022.0.0"]
 ```
 
-### uv init Options for Different Project Types
+**📚 Learn More**: [PEP 735 Dependency Groups](https://packaging.python.org/en/latest/specifications/dependency-groups/)
 
-#### Library Project: `uv init --lib my-awesome-library`
+## Tool Selection: uv for Libraries
 
-**Creates this structure:**
-```
-my-awesome-library/
-├── pyproject.toml              # Project configuration
-├── README.md                   # Auto-generated documentation
-├── src/                        # Source code (src/ layout)
-│   └── my_awesome_library/     # Package (note: underscores)
-│       └── __init__.py         # Package entry point
-└── tests/                      # Test directory
-    └── __init__.py
-```
+### Why uv for Library Development
 
-#### Application Project: `uv init --app my-app`
+**🚀 Performance Benefits**:
+- **10-100x faster** than pip for dependency resolution
+- **Integrated Python management**: No need for separate pyenv
+- **Built-in virtual environments**: Automatic .venv creation
 
-**Creates this structure:**
-```
-my-app/
-├── pyproject.toml              # Project configuration  
-├── README.md                   # Auto-generated documentation
-├── src/                        # Source code
-│   └── my_app/
-│       ├── __init__.py
-│       └── main.py             # Application entry point
-└── tests/
-    └── __init__.py
-```
+**🔧 Library-Friendly Features**:
+- **Multi-Python testing**: Easy testing across Python versions
+- **Flexible dependency handling**: Respects version ranges properly
+- **Modern standards**: Native pyproject.toml support
 
-### Essential uv Commands for Library Developers
+### Essential uv Commands for Libraries
 
 ```bash
-# Initialize new library project (creates pyproject.toml + src layout)
+# Initialize new library project
 uv init --lib my-awesome-library
+cd my-awesome-library
 
-# Add dependencies (automatically updates pyproject.toml)
-uv add numpy pandas                # Add runtime dependencies
-uv add --group dev pytest ruff    # Add development dependencies
+# Add dependencies to pyproject.toml
+uv add "requests>=2.25.0,<3.0.0"
+uv add "typer>=0.9.0,<1.0.0"
 
-# Development workflow (automatically creates virtual environment)
-uv sync --all-groups              # Creates .venv/ + installs all dependency groups
-uv sync --group test              # Creates .venv/ + installs specific groups
+# Add development dependencies
+uv add --dev pytest black ruff
 
-# Test your library as end users would
-uv pip install -e ".[viz,ml]"     # Test optional dependencies
-python -c "import my_awesome_library"  # Verify installation
+# Install in development mode
+uv sync
 
-# Test with development dependencies override
-uv sync --frozen                  # Use exact versions from uv.lock
+# Test your library as end users would install it
+uv build
+uv run --isolated python -c "import my_awesome_library; print('Success!')"
 
-# Build and verify distribution packages
-uv build                          # uv calls your build backend (e.g., hatchling)
-uv pip install dist/my_awesome_library-*.whl  # Test wheel locally
-
-# Check what will be published (these settings won't be included)
-tar -tzf dist/my_awesome_library-*.tar.gz  # Inspect source distribution
+# Test with different Python versions
+uv run --python 3.8 pytest
+uv run --python 3.11 pytest
 ```
 
-**Important**:
-- All `[tool.uv.*]` sections are **for library developers only**
-- End users installing your library (`pip install your-lib`) never see these settings
-- These settings are ignored when your library is published to PyPI
-
-### Why Use uv?
-
-**Key Advantages:**
-- **Speed**: 10-100x faster than pip for development workflows
-- **Standards Support**: Full support for PEP 621 and PEP 735
-- **Compatibility**: Generates standard pyproject.toml that works with all tools
-- **No Lock-in**: Your library remains pip-installable for end users
-
-### Development Performance Comparison
-
-| Operation | pip | uv | Impact on Development |
-|-----------|-----|-----|----------------------|
-| Create venv | 2-3s | <0.1s | Faster iteration |
-| Install test deps | 10-30s | 1-2s | Faster CI/CD |
-| Resolve dependencies | 30s+ | 1-2s | Faster development setup |
-| Rebuild after changes | 15s+ | 1s | Better developer experience |
-
-**Important Notes:**
-- **End users unaffected**: `pip install your-lib` works identically regardless of your dev setup
-- **Developer-only settings**: All `[tool.uv]` configurations are for development only
-- **Standard compliance**: Your published package follows PEP standards and works with all tools
-
-### uv vs Hatch for Library Development
-
-| Feature | uv | Hatch |
-|---------|----|---------|
-| Speed | ⚡ 10-100x faster | 🐌 Standard Python speed |
-| Python management | ✅ Built-in | ✅ Built-in |
-| Environment matrices | ❌ Manual setup | ✅ Native support (`hatch test -py 3.10,3.11,3.12`) |
-| Version management | ❌ Manual | ✅ Automated (`hatch version minor`) |
-| Build backend | 🔧 Any (setuptools, hatch, etc.) | 🏗️ Hatchling (recommended) |
-| Testing workflow | 📦 Basic | 🎯 Rich (`hatch test --cover --all`) |
-
-**Use uv when:**
-- Speed is critical (large dependencies)
-- Simple library development
-- Team already uses uv for applications
-- Rapid iteration during development
-
-**Use Hatch when:**
-- **Public library development** (matrix testing across Python versions)
-- Need automated version management and publishing
-- Complex testing workflows with coverage
-- Multiple environment management (test, docs, lint separately)
-
-### Design Principles
-
-```mermaid
-graph TD
-    A[Module Design] --> B[Single Responsibility]
-    A --> C[Clear Interface]
-    A --> D[Minimal Dependencies]
-    A --> E[Logical Grouping]
-
-    B --> B1[One purpose per module]
-    C --> C1[__all__ exports]
-    C --> C2[Clear public API]
-    D --> D1[Avoid circular imports]
-    D --> D2[Minimize coupling]
-    E --> E1[Related functionality together]
-    E --> E2[Intuitive naming]
-
-    style A fill:#42a5f5
-    style B fill:#66bb6a
-    style C fill:#ffa726
-    style D fill:#ff6b6b
-    style E fill:#ab47bc
-```
-
-### Common Anti-Patterns to Avoid
-
-#### 1. Wildcard Imports in __init__.py
-
-**❌ DON'T:**
-```python
-from .module1 import *  # Unclear namespace
-from .module2 import *  # Name conflicts
-```
-
-**✅ DO:**
-```python
-from .module1 import ClassA, function_b
-__all__ = ["ClassA", "function_b"]
-```
-
-#### 2. Deep Nesting Without Purpose
-
-**❌ DON'T:**
-```
-mypackage/
-├── core/
-│   └── utils/
-│       └── helpers/
-│           └── functions/
-│               └── basic.py  # 5 levels deep! What does this do?
-```
-
-**✅ DO:**
-```
-mypackage/
-├── preprocessing/
-│   ├── text.py      # Clear purpose: text preprocessing
-│   └── numerical.py # Clear purpose: numerical preprocessing
-└── models/
-    └── base.py      # 2-3 levels max, obvious function
-```
-
-#### 3. Side Effects During Import
-
-**❌ DON'T:**
-```python
-# __init__.py
-API_KEY = os.environ["SECRET_KEY"]  # Crashes on import!
-import matplotlib.pyplot as plt      # Crashes if matplotlib not installed!
-
-# visualization.py
-from matplotlib import pyplot as plt  # Import at module level
-plt.style.use('seaborn')              # Side effect during import!
-```
-
-**✅ DO:**
-```python
-# __init__.py  
-def get_api_key():
-    return os.environ["SECRET_KEY"]  # Called when needed
-
-# visualization.py - Safe optional dependency handling
-try:
-    import matplotlib.pyplot as plt
-    HAS_MATPLOTLIB = True
-except ImportError:
-    plt = None
-    HAS_MATPLOTLIB = False
-
-def create_plot():
-    if not HAS_MATPLOTLIB:
-        raise ImportError("Install with: pip install mylib[viz]")
-    plt.style.use('seaborn')  # Safe to configure now
-    return plt.figure()
-```
-
-**Why this matters**: Users can `import mylib` even without optional dependencies installed.
-## Advanced pyproject.toml Configuration
-
-### Python Version Support
-
-```toml
-requires-python = ">=3.8"  # Support wide range
-
-[tool.cibuildwheel]
-# Build wheels for multiple Python versions
-build = "cp38-* cp39-* cp310-* cp311-* cp312-*"
-```
-
-### Scripts - Creating Command Line Tools
-
-```toml
-[project.scripts]
-# Creates executable commands users can run in terminal
-awesome-tool = "my_awesome_library.cli:main"  # Creates `awesome-tool` command
-data-processor = "my_awesome_library.processor:run"  # Creates `data-processor` command
-```
-
-**Result**: After `pip install my-awesome-library`, users can run:
-```bash
-$ awesome-tool --help
-$ data-processor input.csv
-```
-
-**Use when**: Your library provides command-line utilities for end users.
-
-### Entry Points - Plugin Discovery System
-
-```toml
-[project.entry-points."my_framework.plugins"] 
-awesome = "my_awesome_library.plugins:AwesomePlugin"  # Register plugin for other frameworks
-```
-
-**Result**: Other frameworks can discover and load your plugin:
-```python
-# Framework code can find your plugin
-import pkg_resources
-for entry_point in pkg_resources.iter_entry_points('my_framework.plugins'):
-    plugin_class = entry_point.load()  # Loads AwesomePlugin
-```
-
-**Use when**: Your library extends other frameworks or applications as a plugin.
-
-### Testing Configuration
-
-```toml
-[tool.pytest.ini_options]
-minversion = "7.0"
-addopts = [
-    "--cov=my_awesome_library",
-    "--cov-report=term-missing",
-    "--cov-report=html",
-]
-testpaths = ["tests"]
-
-[tool.coverage.run]
-source = ["src/my_awesome_library"]
-branch = true
-
-[tool.coverage.report]
-exclude_lines = [
-    "pragma: no cover",
-    "def __repr__",
-    "raise AssertionError",
-    "raise NotImplementedError",
-]
-```
-
-## Real-World Example: requests Library
-
-```toml
-# Simplified requests pyproject.toml structure
-[project]
-name = "requests"
-dependencies = [
-    "charset-normalizer>=2,<4",  # Flexible
-    "idna>=2.5,<4",             # Flexible
-    "urllib3>=1.21.1,<3",       # Flexible
-    "certifi>=2017.4.17",       # Very flexible
-]
-
-[project.optional-dependencies]
-security = ["pyOpenSSL>=0.14", "cryptography>=1.3.4"]
-socks = ["PySocks>=1.5.6,!=1.5.7"]
-use_chardet_on_py3 = ["chardet>=3.0.2,<6"]
-```
-
-Notice: No pinned versions! Maximum flexibility for users.
-
-## Library Distribution and Publishing
-
-### Basic Workflow
+### Development Workflow
 
 ```bash
-# 1. Build packages
-uv build                    # Creates dist/ with .whl and .tar.gz
+# Daily development cycle
+uv sync                    # Ensure environment is up to date
+uv run pytest            # Run tests
+uv run black src/         # Format code
+uv run ruff check src/    # Lint code
 
-# 2. Test locally  
-pip install dist/*.whl      # Test your wheel works
-
-# 3. Upload to PyPI
-pip install twine           # Publishing tool
-twine upload dist/*         # Requires PyPI account + API token
+# Before releasing
+uv build                  # Build distribution packages
+uv run twine check dist/* # Verify packages are valid
 ```
 
-### Key Concepts
+## Distribution and Publishing
 
-- **Wheel (.whl)**: Fast binary format for installation
-- **Source Distribution (.tar.gz)**: Source code package  
-- **PyPI**: The Python Package Index where libraries are published
-- **Semantic Versioning**: `1.2.3` → `1.2.4` (patch) → `1.3.0` (minor) → `2.0.0` (major)
+### Build and Release Workflow
 
-## Summary
+```bash
+# 1. Prepare release
+# Update version in pyproject.toml
+# Update CHANGELOG.md
+# Commit changes
 
-Library repository structure reflects the fundamental principle of **no environment control**:
+# 2. Build distribution packages
+uv build
 
-- **src/ layout**: Ensures clean separation and proper testing
-- **Flexible dependencies**: Work in many environments
-- **Rich metadata**: Help users make informed choices
-- **Modern tooling**: uv for speed, hatch for features
-- **Testing isolation**: Verify behavior across environments
-- **Clear module design**: Single responsibility, logical organization
-- **Distribution workflow**: Automated building and publishing
-- **Version management**: Semantic versioning for compatibility
+# 3. Verify packages
+uv run twine check dist/*
+
+# 4. Upload to PyPI
+uv run twine upload dist/*
+
+# 5. Tag release
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+### What Gets Distributed
+
+**📦 Built Packages**:
+- **Source distribution (.tar.gz)**: Contains source code, users compile if needed
+- **Wheel (.whl)**: Pre-compiled package, faster installation
+
+**📋 Package Contents**:
+- Your Python package from `src/`
+- README.md, LICENSE, and other specified files
+- Metadata from pyproject.toml
+- **NOT included**: tests/, docs/, .github/, development files
+
+## Key Takeaways
+
+1. **Good libraries prioritize compatibility** → flexible dependencies, wide Python support
+2. **src/ layout provides testing isolation** → ensures package works when installed
+3. **pyproject.toml is the modern standard** → replaces setup.py for configuration
+4. **Flexible version ranges prevent conflicts** → `>=1.0,<2.0` instead of `==1.5.3`
+5. **uv accelerates library development** → 10-100x faster than traditional tools
+6. **Optional dependencies enable modularity** → users install only what they need
+7. **Build verification catches packaging issues** → test installation before release
 
 ---
 
