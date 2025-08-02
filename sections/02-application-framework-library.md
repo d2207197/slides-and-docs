@@ -68,7 +68,51 @@ if __name__ == "__main__":
 | **Application (Public)** | 🔸 **Partial Control** - Must work in user environments | `requests>=2.20,<3.0` | Too strict → users can't install |
 | **Application (Private)** | ✅ **Full Control** - Own environments | `requests==2.28.1` | Too loose → deployment inconsistency |
 
-**Key Insight**: Environment control level determines dependency flexibility needs, but **distribution model** can override this for applications.
+**Key Insight**: Environment control determines the compatibility vs stability tradeoff:
+- **Less control** → More flexibility needed for compatibility
+- **More control** → Stricter constraints possible for stability
+
+## Example: The Version Conflict Problem
+
+```mermaid
+graph TB
+    subgraph AppEnvA ["App A Environment (Python 3.8)"]
+        AppA[Application A]
+        NumPy119[numpy 1.19]
+        LibC1[Library C]
+        AppA --> NumPy119
+        AppA --> LibC1
+        LibC1 -.->|"Must work with"| NumPy119
+    end
+
+    subgraph AppEnvB ["App B Environment (Python 3.11)"]
+        AppB[Application B]
+        NumPy124[numpy 1.24]
+        LibC2[Library C]
+        AppB --> NumPy124
+        AppB --> LibC2
+        LibC2 -.->|"Must work with"| NumPy124
+    end
+
+
+    style AppEnvA fill:#e3f2fd,stroke:#1565c0,stroke-width:3px
+    style AppEnvB fill:#e8f5e8,stroke:#2e7d32,stroke-width:3px
+    style AppA fill:#bbdefb,stroke:#1976d2,stroke-width:2px
+    style AppB fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style NumPy119 fill:#fff3e0,stroke:#f57c00,stroke-width:1px
+    style NumPy124 fill:#fff3e0,stroke:#f57c00,stroke-width:1px
+    style LibC1 fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px
+    style LibC2 fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px
+```
+
+**The Scenario**:
+- App A: Python 3.8 + numpy 1.19
+- App B: Python 3.11 + numpy 1.24
+- Library C: Must work in both environments
+
+**The Solution**:
+- Separate environments for each application
+- Library C uses `numpy>=1.19,<2.0` and supports Python 3.8+ (flexible ranges work in both environments)
 
 
 ## Key Takeaway
@@ -78,11 +122,6 @@ if __name__ == "__main__":
 - **Frameworks**: They call you → Control flow inversion, manage complexity
 - **Applications**: Self-contained → Handle complete workflows
 
-**Dependency management is about balancing compatibility vs stability:**
-- More flexibility → Better compatibility, less stability
-- More constraints → Better stability, worse compatibility
-- **Exception**: Simple tools with excellent test coverage can achieve both
-
 **Complexity drives environment control needs:**
 - **Libraries**: Usually simple → Can maintain both compatibility and stability
-- **Applications**: More complex → Need higher environment control to ensure reliability
+- **Applications**: More complex → Need higher environment control by sacrificing compatibility to ensure reliability

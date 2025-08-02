@@ -4,20 +4,9 @@
 
 Every application depends on its environment - from the hardware it runs on to the libraries it imports. These environmental dependencies can be divided into distinct layers, each with its own management challenges.
 
-**The Fundamental Challenge**: We'd love all applications and libraries to share the same environment seamlessly. But reality is messy:
-- Application A needs Python 3.8 with numpy 1.19
-- Application B needs Python 3.11 with numpy 1.24
-- Library C must work with both
-- System tools require Python 3.6
-
-These conflicts force us to understand and manage each layer separately. Here are the key layers that affect how we manage Python projects:
+Understanding these layers helps us choose the right tools and strategies for different project types. Here are the key layers that affect how we manage Python projects:
 
 
-  <iframe src="https://www.tldraw.com/p/0zOzCdw0NMJIFmWJ4K9de?d=v0.0.1313.892.Zntmj6LUpQYEBSGgTjhRq"
-    style="width: 100%; height: 400px; border: none;"
-    allowfullscreen
-    loading="lazy"
-  ></iframe>
 
 | Layer | Python Tools | Java Tools | What They Control | Example Usage |
 |-------|--------------|------------|-------------------|---------------|
