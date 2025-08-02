@@ -402,11 +402,6 @@ tar -tzf dist/my_awesome_library-*.tar.gz  # Inspect source distribution
 - Complex testing workflows with coverage
 - Multiple environment management (test, docs, lint separately)
 
-
-
-
-## Module and Subpackage Design
-
 ### Design Principles
 
 ```mermaid
@@ -504,52 +499,6 @@ def create_plot():
 ```
 
 **Why this matters**: Users can `import mylib` even without optional dependencies installed.
-
-#### 4. Tight Coupling Between Modules
-
-**❌ DON'T: Everything depends on everything**
-```mermaid
-graph TD
-    A[UserService] --> B[EmailService]
-    A --> C[Database]
-    A --> D[Cache]
-    A --> E[Logger]
-    
-    B --> C  
-    B --> E
-    D --> C
-    D --> E
-    
-    style A fill:#ff6b6b
-    style B fill:#ff6b6b
-    style C fill:#ff6b6b
-    style D fill:#ff6b6b
-    style E fill:#ff6b6b
-```
-
-**✅ DO: Clean dependency flow through interfaces**
-```mermaid
-graph TD
-    A[UserService] --> F[Interfaces]
-    
-    F --> B[EmailService]
-    F --> C[Database]
-    F --> D[Cache]
-    F --> E[Logger]
-    
-    style A fill:#66bb6a
-    style F fill:#42a5f5
-    style B fill:#66bb6a
-    style C fill:#66bb6a
-    style D fill:#66bb6a
-    style E fill:#66bb6a
-```
-
-**Impact**: Adding SMS notifications? Just implement the interface - no changes to UserService!
-
-
-
-
 ## Advanced pyproject.toml Configuration
 
 ### Python Version Support
@@ -678,4 +627,7 @@ Library repository structure reflects the fundamental principle of **no environm
 - **Distribution workflow**: Automated building and publishing
 - **Version management**: Semantic versioning for compatibility
 
-Next: Section 06 - Evolution of Modern Python Tools
+---
+
+**Next Section**: [06-module-subpackage-design.md](06-module-subpackage-design.md) - Module organization and import management
+**Previous Section**: [04-python-environment-tools.md](04-python-environment-tools.md) - Python environment management tools

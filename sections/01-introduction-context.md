@@ -1,65 +1,57 @@
-# Introduction & Context
+# Section 01: Introduction & Context
 
-## Learning Objectives
+> Setting the stage for modern Python packaging and production best practices
 
-By the end of this presentation, you will understand:
+## Context: Who This Is For and Why
 
-### Core Architectural Concepts
-- **Environment Control Fundamentals**: How libraries, frameworks, and applications control their execution environments differently and why this drives all packaging decisions
-- **6-Layer Environment Stack**: From hardware to dependencies, and how different project types control each layer with varying flexibility strategies
-- **Tool Specialization**: How to choose the right tool for the right layer to avoid anti-patterns and maximize efficiency
+Modern software teams often include diverse backgrounds transitioning to Python:
 
-### Practical Implementation
-- **Modern Python Tooling**: Why uv, Ruff, and modern tools are 10-100x faster and how they compare to traditional approaches
-- **Repository Structure**: How to organize library vs application projects for maximum reusability and maintainability  
-- **Dependency Management Strategy**: When to use flexible version ranges vs exact pins based on environment control level
+- **Data Scientists & ML Engineers**: Strong Python skills for analysis and modeling, but limited packaging and production deployment experience
+- **Backend Engineers**: Deep software engineering practices from Java/JVM world, but new to Python's unique ecosystem
+- **Common Challenge**: Moving from "script mentality" to building production-grade Python software
 
-### Industry Context & Evolution
-- **Historical Perspective**: Why Python packaging was broken for 15+ years and how it learned from Java, Ruby, Node.js, and Rust
-- **Modern Solutions**: How Python finally caught up with integrated tooling and what this means for production workflows
-- **Production Mindset**: Transition from "script mentality" to understanding production software architecture and enterprise deployment patterns
+This presentation bridges these gaps through a fundamental insight: **environment control drives all Python packaging decisions**.
 
-## Presentation Agenda
+## Core Concept: Environment Control
 
-### Section 1: Foundation Concepts (15 minutes)
-**Applications vs Frameworks vs Libraries**
-- Environment control fundamentals and Inversion of Control patterns
-- Why environment control level determines dependency management strategy
-- Visual architecture diagrams and real-world examples
+The key to understanding Python packaging is recognizing how different project types control their execution environments:
 
-### Section 2: Environment Architecture (12 minutes)
-**The 6-Layer Environment Stack**
-- Hardware → OS → System Packages → Runtime → Isolation → Dependencies & Config
-- How different project types control each layer with varying flexibility strategies
-- Tool specialization principles and common anti-patterns to avoid
+- **Libraries** (Minimal Control) → Must use flexible version ranges to work anywhere
+- **Frameworks** (Partial Control) → Balance stability with extensibility
+- **Applications** (Full Control) → Can pin exact versions for reproducibility
 
-### Section 3: Modern Python Tooling (18 minutes)
-**Cross-Layer Tool Control & Performance Revolution**
-- Tool categories: Full Stack Controllers, Python Environment Managers, Scientific Ecosystem
-- Why uv is 10-100x faster and how Docker + uv patterns work in production
-- Anti-patterns: Why conda + uv breaks and how to avoid tool conflicts
+This single principle explains why NumPy uses `>=1.20,<2.0` while your web app uses `==1.23.5`. Every packaging decision flows from this foundation.
 
-### Section 4: Library Repository Structure (12 minutes)
-**pyproject.toml Design & Modern Development**
-- Repository structure: src/ layout vs flat layout and when to use each
-- Build systems vs project management tools: uv + hatchling patterns
-- Dependency groups (PEP 735) vs optional-dependencies for different audiences
+## What You'll Learn
 
-### Section 5: Historical Context (8 minutes)
-**Python's 15-Year Journey from Broken to Best-in-Class**
-- Why Python was behind: setup.py complexity, no lock files, manual environment management
-- Learning from other languages: Java's standards, Ruby's workflows, Rust's performance
+1. **Why** applications, frameworks, and libraries require different packaging strategies
+2. **How** the 6-layer environment stack (Hardware → OS → System → Runtime → Isolation → Dependencies) works
+3. **Which** modern tools to use for each layer and when (uv, Poetry, Hatch, pip-tools)
+4. **When** to use flexible vs pinned dependencies based on your project type
+5. **How** to structure repositories and modules for maintainability
+6. **Why** Python packaging was broken for 15+ years and how modern tools fixed it
 
-### Section 6: The Modern Era (10 minutes)  
-**How Python Finally Caught Up (2016-2024)**
-- Standards revolution: PEPs 518, 517, 621, 735
-- Performance breakthrough: Rust-powered tools (uv, Ruff)
-- From 5+ tools to 1: Modern integrated workflows
+## How This Guide Differs
 
-**Total Duration: ~75 minutes**
+Unlike typical Python packaging tutorials, we:
 
-### Key Takeaways
-- **Environment control drives everything**: Libraries need flexibility, applications need reproducibility
-- **Use the right tool for the right layer**: Avoid cross-layer anti-patterns that create maintenance burden
-- **Modern Python tooling has solved the packaging problem**: uv + pyproject.toml provides world-class developer experience
+1. **Explain the 6-layer architecture** - A unique perspective rarely found elsewhere
+2. **Provide historical context** - Why Python was late and what we learned
+3. **Start with "why" not "how"** - Architecture before tools
+4. **Use Java comparisons** - Leverage existing knowledge
+5. **Focus on modern best practices** - What actually works in 2024+
 
+## Prerequisites
+
+- Basic Python programming knowledge
+- Familiarity with `pip install` (internals knowledge not required)
+- Interest in building maintainable software
+
+## Let's Begin
+
+The journey starts with understanding the fundamental distinction between applications, frameworks, and libraries - because this distinction drives every other decision in Python packaging.
+
+---
+
+**Next Section**: [02-application-framework-library.md](02-application-framework-library.md) - The core architectural concepts
+**Duration**: This section ~3 minutes

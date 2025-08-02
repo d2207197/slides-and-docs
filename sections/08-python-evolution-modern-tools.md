@@ -423,7 +423,7 @@ uv publish
 
 **The Bottom Line**: Python packaging is no longer broken. Modern tools like uv have learned from the best of other languages and delivered a world-class experience. The 15-year gap has been closed.
 
-### For Taboola Engineers
+### For Modern Development Teams
 
 **If you're starting a new Python project today**:
 1. Use `uv` - it's the future
@@ -437,3 +437,8 @@ uv publish
 - **Frameworks** → Balanced approach depending on plugin ecosystem needs
 
 **Python packaging is finally solved.** 🎉
+
+---
+
+**Previous Section**: [07-python-packaging-before-modern-era.md](07-python-packaging-before-modern-era.md) - The Wild West years
+**Next Section**: [appendix-tools-reference.md](appendix-tools-reference.md) - Quick reference guide

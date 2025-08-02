@@ -7,17 +7,15 @@ graph TB
         Library[Library]
 
         Code -->|"Code calls library"| Library
-        Code -->|"Code calls library"| Lib3
+        Code -->|"Code calls library"| Lib2
 
         subgraph Framework_Container ["Framework"]
             Framework[Framework logic]
             Lib1[Library]
             Lib2[Library]
-            Lib3[Library]
 
             Framework --> Lib1
             Framework --> Lib2
-            Framework --> Lib3
         end
 
         Framework -->|"Framework calls code"| Code
@@ -28,7 +26,6 @@ graph TB
     style Library fill:#ba68c8,stroke:#7b1fa2,stroke-width:2px
     style Lib1 fill:#ffd54f,stroke:#fbc02d,stroke-width:2px
     style Lib2 fill:#ffd54f,stroke:#fbc02d,stroke-width:2px
-    style Lib3 fill:#ffd54f,stroke:#fbc02d,stroke-width:2px
     style Framework_Container fill:#e3f2fd,stroke:#1565c0,stroke-width:3px
     style Application_Container fill:#ffebee,stroke:#d84315,stroke-width:3px
 ```
@@ -42,7 +39,7 @@ graph TB
 
 **Key Insight**: Environment isolation needs vary dramatically by type
 
-## Inversion of Control in Practice
+## Code Examples: How Each Type Works
 
 ```python
 # LIBRARY: You control when to call

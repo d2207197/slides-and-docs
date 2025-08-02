@@ -4,19 +4,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This repository is designed to prepare a presentation about Python packaging and production best practices for software engineers at Taboola's Taipei office. 
+This repository contains a comprehensive presentation about Python packaging and production best practices for software engineers. The content is designed to be universally applicable to any organization or individual learning modern Python packaging.
 
-## Why This Matters for Taboola
+## Target Audiences
 
-At Taboola, we have diverse teams:
-- **Data Scientists & ML Engineers**: Strong Python skills, but may lack packaging experience
-- **Backend Engineers**: Strong software engineering practices (Java), but new to Python ecosystem
-- **Need**: Production-ready Python code that scales, maintains, and integrates well
-
-The content targets two main audiences:
+The content targets two main audiences commonly found in modern software teams:
 
 - **Data Scientists/ML Engineers**: Strong Python skills but limited packaging knowledge
 - **Backend Engineers**: Strong Java/software engineering practices but new to Python ecosystem
+
+**Need**: Production-ready Python code that scales, maintains, and integrates well
 
 **Core Theme**: The presentation focuses on **environment control as the fundamental driver of Python dependency management**. The goal is to help engineers understand how different Python tool types (libraries, frameworks, applications) control their execution environments, and how this determines dependency management strategies.
 
@@ -103,9 +100,13 @@ When working with this repository:
 - **Production Mindset**: Transition from "script mentality" to understanding production software architecture
 - **Foundation Building**: Section 02 (application-framework-library) establishes core concepts for all subsequent content
 
+## Important Guidelines
+
+- **Universal Applicability**: This presentation should be universally applicable to any organization or individual. Avoid company-specific references (e.g., "At Taboola", "for Taboola engineers"). Use generic terms like "modern software teams", "engineers", or "developers".
+
 ## Target Deliverable
 
-A comprehensive presentation that helps Taboola engineers understand:
+A comprehensive presentation that helps engineers understand:
 - **Environment Control Fundamentals**: How libraries, frameworks, and applications control their execution environments differently
 - **Dependency Strategy Logic**: Why environment control level determines version constraint flexibility (flexible ranges vs exact pins)
 - **Testing Responsibility Architecture**: How different testing requirements drive dependency management decisions

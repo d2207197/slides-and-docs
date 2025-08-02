@@ -28,7 +28,6 @@ Shows each tool's **core responsibility** (🎯) and how they control additional
 | **4. Runtime Platform** | ✅ *base image + apt* | ✅ *downloads binaries* | ✅ *pre-built binaries* | | 🎯 *compiles from source* | |
 | **3. System Packages** | 🎯 *apt/yum in container* | | 🎯 *conda-forge C/C++* | | | |
 | **2. Operating System** | 🎯 *container OS layer* | | | | | |
-| **1. Hardware Foundation** | | | | | | |
 
 **Control Types:**
 - **Direct**: Tool directly manages the layer itself
@@ -98,7 +97,7 @@ uv add scipy                  # uv can't see conda's numpy → installs wrong ve
 - **Day 31**: `uv sync` → 💥 Missing conda packages
 - **Day 32**: Only fix → Delete everything, start over
 
-**Why This Happens**: 
+**Why This Happens**:
 uv and conda maintain **completely separate package databases**. When uv needs numpy, it doesn't check conda's installed packages - it just installs its own version. Now you have two numpy installations fighting for the same Python import, leading to crashes during updates when version mismatches occur.
 
 **Real-world scenario**: ML team uses conda for GPU libraries, adds uv for web APIs. First deployment succeeds, production crashes after security updates.
@@ -194,9 +193,9 @@ CMD ["uvicorn", "src.my_api.main:app", "--host", "0.0.0.0", "--port", "8000"]
 | Aspect | Java | Python | Why It Matters |
 |--------|------|--------|----------------|
 | **Runtime Model** | Single JVM process | Separate interpreters per venv | Python needs virtual environments |
-| **Dependency Isolation** | Classpath ordering | Isolated site-packages per venv | Python physically separates dependencies |
+| **Dependency Isolation** | JAR packaging + Classpath ordering | Isolated site-packages per venv | Java: single JAR possible, Python: needs separate envs |
 | **Native Dependencies** | Rare (JNI) | Common (numpy, scipy) | Python needs conda/system packages |
-| **Platform Abstraction** | JVM handles OS differences | Developer manages OS/arch | Python needs Docker for consistency |
+| **Platform Abstraction** | JVM handles OS differences | Python is cross-platform, but native extensions vary | Pure Python portable, C extensions need care |
 | **Build Integration** | Maven/Gradle includes all | pip (install) + setuptools (build) + twine (publish) | Python uses specialized tools |
 
 **Key Insight**: Java's classpath provides logical isolation within one JVM, while Python requires physical isolation through separate virtual environments. This fundamental difference explains why Python has evolved more diverse, specialized tooling - each tool solves a specific problem that Java's unified approach handles implicitly.
@@ -215,6 +214,6 @@ For comprehensive tool-by-tool comparisons, ecosystem differences, and migration
 
 This detailed reference covers:
 - **13 tool categories**: From environment controllers to performance profiling
-- **Ecosystem differences**: Python vs Java strengths and trade-offs  
+- **Ecosystem differences**: Python vs Java strengths and trade-offs
 - **Migration tips**: For developers switching between ecosystems
 - **Enterprise considerations**: Tool maturity and production readiness
