@@ -163,21 +163,28 @@ A comprehensive presentation that helps engineers understand:
 - **Development efficiency**: Local development without Docker for faster iteration
 - **PEP 751 awareness**: Standard lock file format coming (accepted March 2025)
 
+**Module Design Patterns Established** in `sections/07-module-subpackage-design.md`:
+- **Good module characteristics**: Single responsibility, clear interface, minimal dependencies, logical organization
+- **API control with __init__.py**: Always use with explicit imports and __all__ for namespace control
+- **Dependency architecture**: Layered dependencies prevent circular imports and enable easy testing
+- **Optional dependency handling**: Safe try/except patterns connecting to Section 05 optional-dependencies
+- **Anti-patterns coverage**: Wildcard imports, deep nesting, circular dependencies, unsafe optional deps
+
 **Key Sections Updated**:
 - `sections/01-introduction-context.md`: Updated learning objectives to emphasize environment control theme
-- `sections/README.md`: Navigation guide for all presentation sections
-- `sections/07-module-subpackage-design.md`: Module organization and import management patterns
+- `sections/README.md`: Navigation guide for all presentation sections (needs updating for section reordering)
+- `sections/07-module-subpackage-design.md`: Complete module organization and import management patterns
 - `CLAUDE.md`: Updated to reflect complete section coverage
 
-**Sections 01-06 Complete**: 
+**Sections 01-07 Complete**: 
 - **Foundation sections (01-04)**: Environment control concepts, architecture layers, tool ecosystem
-- **Implementation sections (05-06)**: Library packaging patterns, server application deployment
-- **Practical patterns established**: uv workflows, Docker + uv integration, dependency strategies
+- **Implementation sections (05-07)**: Library packaging, server application deployment, module design patterns
+- **Practical patterns established**: uv workflows, Docker + uv integration, dependency strategies, module organization
 - **Editorial preferences documented**: Shallow-to-deep progression, avoid redundancy, presentation-friendly format
 
 **Ready for**: 
-- Development of remaining sections (07-12) building on established foundation
-- Section 07 needs Module Design Principles moved from Section 05
+- Development of remaining sections (08-12) building on established foundation
+- Update README.md to reflect section reordering and current content
 - Conversion to Slidev presentation format when content complete
 
 ## Recent Memories and Key Insights

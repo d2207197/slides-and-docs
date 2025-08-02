@@ -34,23 +34,23 @@ Understanding who controls what in the Python ecosystem is crucial for making ef
    - Performance considerations (uv 10-100x faster)
    - Anti-patterns to avoid (conda + uv conflicts)
 
-5. **[Application Example: Docker + uv](05-application-example-docker-uv.md)**
-   - Complete FastAPI application with Docker deployment
-   - Multi-stage build optimization (6x smaller images)
-   - Development workflow and production parity
-   - Layer separation in practice
-
-6. **[Library Repository Structure](06-library-repository-structure.md)**
+5. **[Library Repository Structure](05-library-repository-structure.md)**
    - Modern Python library layout (src/ structure)
-   - pyproject.toml design for maximum reusability
-   - uv vs hatch for library development
-   - Distribution and publishing workflows
+   - pyproject.toml design with build backends vs project managers
+   - uv workflow for library development and publishing
+   - Optional dependencies vs dependency-groups
+
+6. **[Server Application Development](06-application-example-docker-uv.md)**
+   - Complete FastAPI application with Docker deployment
+   - Conservative dependency ranges and lock files
+   - Multi-stage build optimization and layer separation
+   - Development workflow and production parity
 
 7. **[Module & Subpackage Design](07-module-subpackage-design.md)**
-   - Design principles and anti-patterns
-   - Import management and namespace control
-   - Advanced patterns (lazy loading, plugin systems)
-   - Environment control implications
+   - Good module characteristics and API control with __init__.py
+   - Layered dependencies and avoiding circular imports
+   - Safe optional dependency handling patterns
+   - Anti-patterns: wildcard imports, deep nesting, side effects
 
 ### Historical Context
 
@@ -83,7 +83,7 @@ Each section includes:
 ## Key Takeaways
 
 1. **Environment control** determines dependency management strategy
-2. **Libraries** have no control → flexible version ranges
+2. **Libraries** have minimal control → flexible version ranges
 3. **Frameworks** have partial control → balance stability with extensibility
 4. **Applications** have full control → pin exact versions
 5. **Modern tools** (uv, Ruff) offer 10-100x performance improvements
