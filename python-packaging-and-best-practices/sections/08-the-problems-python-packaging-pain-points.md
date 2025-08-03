@@ -15,7 +15,7 @@
 - **Impact**: Led to fragmented community AND fragmented tooling ecosystem
 
 ### 2. **🎯 No Unified Environment and Dependency Management Solution**
-*The real pain point: Different tools for different project types*
+*The pain point: Different tools for different project types*
 - **Libraries**: setup.py + twine + PyPI (complex but functional)
 - **Applications**: requirements.txt + pip (primitive and error-prone)
 - **Data Science**: conda + environment.yml (incompatible with PyPI)
@@ -23,20 +23,26 @@
 - **Impact**: Ecosystem fragmentation, no single solution
 
 ### 3. **🔧 Executable setup.py**
-*Blocked tooling automation*
+*Technical debt: Blocked tooling automation*
 - **Arbitrary code execution**: Installing packages could run anything (security risk)
 - **Dynamic metadata**: Tools couldn't analyze without executing (auditing impossible)
 - **No static analysis or editing**: Tools couldn't parse or modify metadata without code execution
 - **Impact**: Prevented development of automated tooling for environment and dependency management
 
 ### 4. **🏚️ Environment Management Hell**
-*Result: Manual processes everywhere*
-- **No auto version switching**: Unlike Ruby's `.ruby-version` (2009) or Node's `.nvmrc` (2013)
+*Daily friction: Manual processes everywhere*
+- **No auto version switching**: pyenv existed (2011) but required manual setup, unlike Ruby's automatic `.ruby-version` (2009)
 - **Manual activation nightmare**: `source venv/bin/activate` vs automatic project isolation
 - **Python version chaos**: System Python? pyenv? conda? Docker? All conflicting
 - **Impact**: Daily friction for every developer, caused by lack of automated tooling
 
-## Python's Transformation: From Worst to Best (2015-2025)
+## Python's Transformation: From Worst to Best (2017-2025)
+
+**The Turning Point: PEP 518 (2017)**
+- **pyproject.toml foundation**: First standard declarative configuration format
+- **End of executable setup.py era**: Tools could finally parse metadata statically
+- **Modern tool explosion**: Poetry, PDM, Hatch, and uv all built on this foundation
+
 
 ### Python's Development Timeline: Problem Periods and Solutions
 
@@ -68,7 +74,7 @@ gantt
     axisFormat %Y
 
     section Python Evolution
-    distutils (basic build)          :crit, py1, 2000, 2020
+    distutils (basic build)          :crit, py1, 2000, 2021
     setuptools (dependencies)        :done, py2, 2004, 2025
     easy_install (install)           :crit, py3, 2004, 2013
     pip (package install)            :done, py4, 2008, 2025
@@ -83,11 +89,16 @@ gantt
     Auto Env Switching               :milestone, py_auto, 2024, 0d
 
     section Java Ecosystem
-    Ant (build scripts)              :done, java1, 2000, 2025
-    Maven (deps + lifecycle)         :done, java2, 2004, 2025
-    Gradle (flexible DSL)            :active, java3, 2008, 2025
-    Declarative Config               :milestone, java_config, 2004, 0d
-    Unified Workflow                 :milestone, java_unified, 2004, 0d
+    Ant (build automation)           :done, java1, 2000, 2012
+    Maven (deps + lifecycle)         :done, java2, 2002, 2025
+    Ivy (Ant + dependencies)         :done, java3, 2004, 2015
+    Gradle (flexible + fast)         :active, java4, 2007, 2025
+    Bazel (Google's tool)            :active, java5, 2015, 2025
+    First central repository         :milestone, java_repo, 2002, 0d
+    Dependency management            :milestone, java_deps, 2002, 0d
+    Transitive dependencies          :milestone, java_trans, 2005, 0d
+    Gradle Android default           :milestone, java_android, 2013, 0d
+    Gradle Spring Boot default       :milestone, java_spring, 2014, 0d
 
     section Ruby Ecosystem
     RubyGems (packages)              :done, ruby1, 2004, 2025
@@ -126,7 +137,7 @@ gantt
 | **🔄 Auto Env Switch** | Not needed | ✅ Since 2012 | .nvmrc<br/>(2013) | Built-in | Not needed | ❌ Manual activate | ✅ **uv auto**<br/>(2024) |
 | **📝 Declarative Config** | pom.xml<br/>(2004) | Gemfile<br/>(2010) | package.json<br/>(2010) | Cargo.toml<br/>(2015) | go.mod<br/>(2018) | ❌ setup.py code | ✅ **pyproject.toml**<br/>(2021) |
 
-**The Pattern**: Languages that succeeded had **unified tools from the start**. Python's 2025 transformation finally achieved this through uv + standardization.
+**The Pattern**: Languages that succeeded had **unified tools from the start**. Python's 2025 transformation through uv + standardization is **beginning to approach** other languages' experience.
 
 ## How Python's Gaps Hurt
 
@@ -169,7 +180,7 @@ setup(
 
 **Other languages had unified approaches from the start**:
 - **Java (2004)**: Maven scopes work for all project types
-- **Node.js (2010)**: `devDependencies` work for all project types  
+- **Node.js (2010)**: `devDependencies` work for all project types
 - **Ruby (2010)**: Gemfile groups work for all project types
 
 ### 💔 Developer Experience: Python vs Other Languages
@@ -189,7 +200,7 @@ setup(
 
 **Python 2012** - 🔴 Manual hell:
 ```bash
-sudo apt-get install python3.6
+sudo apt-get install python3.6  # or pyenv install + pyenv local (manual setup)
 virtualenv venv
 source venv/bin/activate
 pip install -r requirements.txt
@@ -236,19 +247,19 @@ config:
     tertiaryColor: '#70a1ff'
 ---
 flowchart TD
-    A["📚 Community & Tool<br/>Fragmentation<br/>🔴 Root Cause"] 
-    
+    A["📚 Community & Tool<br/>Fragmentation<br/>🔴 Root Cause"]
+
     B["🎯 No Unified<br/>Solution<br/>💥 Real Pain Point"]
-    
+
     C["🔧 Executable<br/>setup.py<br/>⚙️ Tooling Blocker"]
-    
+
     D["🏚️ Environment<br/>Management Hell<br/>😫 Daily Friction"]
-    
+
     A -->|"Fragmented solutions"| B
     A -->|"No standardization"| C
     B -->|"No automation"| D
     C -->|"Blocked tooling"| D
-    
+
     style A fill:#ff6b6b,stroke:#ff4757,stroke-width:3px,color:#000000
     style B fill:#ffa502,stroke:#ff6348,stroke-width:3px,color:#000000
     style C fill:#70a1ff,stroke:#5352ed,stroke-width:3px,color:#000000
@@ -262,7 +273,7 @@ These four core problems created a **cascade effect** that made Python packaging
 3. **🔧 Executable setup.py** - Blocked tooling automation and created security risks
 4. **🏚️ Environment Management Hell** - Result: Daily friction for every developer due to manual processes
 
-**The Result**: While other languages had unified workflows by 2010-2012, Python developers struggled with fragmented tooling until 2017-2025.
+**The Result**: While other languages had unified workflows by 2010-2012, Python developers struggled with fragmented tooling until PEP 518 (2017) provided the foundation for modern tools.
 
 ---
 

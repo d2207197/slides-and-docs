@@ -138,6 +138,23 @@ $ pipenv install  # or...
 
 ### The Perfect Storm of Change
 
+**Key Innovation Milestones:**
+
+**2017 - Pipenv: Lock Files Breakthrough**
+- **Proved lock files were viable**: First tool to successfully implement Pipfile.lock
+- **Showed demand existed**: Despite performance issues, gained rapid adoption
+- **Validation of concept**: Demonstrated that Python developers wanted better dependency management
+
+**2018 - Poetry: Unified Workflow Vision**
+- **All-in-one approach**: Combined dependency management, building, and publishing
+- **Cargo-inspired design**: Brought Rust's integrated tooling concepts to Python
+- **Proved unified workflow possible**: Showed Python could have integrated tools like other languages
+
+**2024 - uv: Performance Revolution**
+- **Speed breakthrough**: 10-100x faster than existing tools
+- **Rust-powered reliability**: Modern systems programming language advantages
+- **Universal adoption potential**: Finally made good practices faster than shortcuts
+
 ```mermaid
 ---
 config:
@@ -162,7 +179,7 @@ gantt
     section Standards Evolution
     PEP 517/518 (build system)      :done, std1, 2017, 2025
     PEP 621 (metadata format)       :done, std2, 2020, 2025
-    pyproject.toml adoption          :done, std3, 2021, 2025
+    pyproject.toml widespread use    :done, std3, 2021, 2025
     PEP 735 (dependency groups)     :active, std4, 2023, 2025
     PEP 751 (lock files)            :active, std5, 2025, 2025
     
@@ -174,7 +191,7 @@ gantt
     
     section Key Milestones
     Lock Files Available            :milestone, mile1, 2017, 0d
-    Declarative Config Standard     :milestone, mile2, 2021, 0d
+    Declarative Config Standard     :milestone, mile2, 2017, 0d
     10-100x Speed Improvement       :milestone, mile3, 2024, 0d
     Universal Lock File Standard    :milestone, mile4, 2025, 0d
 ```
