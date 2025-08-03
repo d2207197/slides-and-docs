@@ -21,20 +21,20 @@ Understanding who controls what in the Python ecosystem is crucial for making ef
    - Testing responsibility and dependency management implications
    - Visual architecture diagrams
 
-3. **[Environment Architecture Layers](03-environment-architecture-layers.md)**
+3. **[Environment Architecture Layers](03-environment-architecture-layers.md)** ⭐ CORE SECTION
    - 6-layer environment stack (Hardware → OS → System → Runtime → Isolation → Dependencies)
    - Library/Framework/Application flexibility strategies per layer
    - Layer separation benefits and anti-patterns
 
 ### Practical Implementation
 
-4. **[Python Environment Tools](04-python-environment-tools.md)**
+4. **[Python Environment Tools](04-python-environment-tools.md)** ⭐ CORE SECTION
    - Modern tool ecosystem with Java architectural comparisons
    - Tool specialization by environment layer
    - Performance considerations (uv 10-100x faster)
    - Anti-patterns to avoid (conda + uv conflicts)
 
-5. **[Library Repository Structure](05-library-repository-structure.md)**
+5. **[Library Repository Structure](05-library-repository-structure.md)** ⭐ CORE SECTION
    - Modern Python library layout (src/ structure)
    - pyproject.toml design with build backends vs project managers
    - uv workflow for library development and publishing
