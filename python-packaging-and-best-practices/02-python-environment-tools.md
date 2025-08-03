@@ -192,5 +192,5 @@ This comprehensive chapter covers:
 
 ---
 
-**Next Section**: [05-library-repository-structure.md](05-library-repository-structure.md) - Simple library example with uv
-**Previous Section**: [03-environment-architecture-layers.md](03-environment-architecture-layers.md) - Environment architecture layers
+**Next Section**: [03-library-repository-structure.md](03-library-repository-structure.md) - Simple library example with uv
+**Previous Section**: [01-environment-architecture-layers.md](01-environment-architecture-layers.md) - Environment architecture layers

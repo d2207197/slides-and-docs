@@ -357,5 +357,5 @@ CMD ["python", "-m", "my_api.main"]  # Proper process management
 
 ---
 
-**Next Section**: [07-module-subpackage-design.md](07-module-subpackage-design.md) - Module organization and import management  
-**Previous Section**: [05-library-repository-structure.md](05-library-repository-structure.md) - Simple library example with uv
+**Next Section**: [05-module-subpackage-design.md](05-module-subpackage-design.md) - Module organization and import management  
+**Previous Section**: [03-library-repository-structure.md](03-library-repository-structure.md) - Simple library example with uv

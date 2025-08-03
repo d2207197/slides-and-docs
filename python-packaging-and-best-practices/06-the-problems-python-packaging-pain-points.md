@@ -277,5 +277,5 @@ These four core problems created a **cascade effect** that made Python packaging
 
 ---
 
-**Next Section**: [09-the-root-causes-why-python-fell-behind.md](09-the-root-causes-why-python-fell-behind.md) - The Root Causes: Why Python fell behind & how it caught up
-**Previous Section**: [07-module-subpackage-design.md](07-module-subpackage-design.md) - Module & subpackage design
+**Next Section**: [07-the-root-causes-why-python-fell-behind.md](07-the-root-causes-why-python-fell-behind.md) - The Root Causes: Why Python fell behind & how it caught up
+**Previous Section**: [05-module-subpackage-design.md](05-module-subpackage-design.md) - Module & subpackage design

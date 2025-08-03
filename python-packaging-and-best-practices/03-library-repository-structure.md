@@ -413,5 +413,5 @@ export UV_PUBLISH_TOKEN="pypi-your-token-here"
 
 ---
 
-**Next Section**: [06-application-example-docker-uv.md](06-application-example-docker-uv.md) - Complete Docker + uv application example
-**Previous Section**: [04-python-environment-tools.md](04-python-environment-tools.md) - Python environment tools
+**Next Section**: [04-application-example-docker-uv.md](04-application-example-docker-uv.md) - Complete Docker + uv application example
+**Previous Section**: [02-python-environment-tools.md](02-python-environment-tools.md) - Python environment tools

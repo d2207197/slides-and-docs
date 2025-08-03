@@ -624,3 +624,7 @@ addopts = ["--cov=myproject", "-n=auto"]
 5. **Incremental Adoption**: Migrate gradually to minimize risk
 
 **Remember**: The ecosystem is evolving rapidly. Tools that dominate today might be replaced tomorrow. Stay flexible and adopt incrementally!
+
+---
+
+**Previous Section**: [07-the-root-causes-why-python-fell-behind.md](07-the-root-causes-why-python-fell-behind.md) - The Root Causes: Why Python fell behind & how it caught up

@@ -302,5 +302,5 @@ gantt
 
 ---
 
-**Next Section**: [10-the-solutions-modern-python-tools.md](10-the-solutions-modern-python-tools.md) - The Solutions: Modern Python tools & best practices  
-**Previous Section**: [08-the-problems-python-packaging-pain-points.md](08-the-problems-python-packaging-pain-points.md) - The Problems: Python's packaging pain points
+**Next Section**: [08-the-solutions-modern-python-tools.md](08-the-solutions-modern-python-tools.md) - The Solutions: Modern Python tools & best practices  
+**Previous Section**: [06-the-problems-python-packaging-pain-points.md](06-the-problems-python-packaging-pain-points.md) - The Problems: Python's packaging pain points

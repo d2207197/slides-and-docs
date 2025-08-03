@@ -280,5 +280,5 @@ if FEATURES['advanced_math']:
 
 ---
 
-**Next Section**: [08-the-problems-python-packaging-pain-points.md](08-the-problems-python-packaging-pain-points.md) - The Problems: Python's packaging pain points
-**Previous Section**: [06-application-example-docker-uv.md](06-application-example-docker-uv.md) - Complete Docker + uv application example
+**Next Section**: [06-the-problems-python-packaging-pain-points.md](06-the-problems-python-packaging-pain-points.md) - The Problems: Python's packaging pain points
+**Previous Section**: [04-application-example-docker-uv.md](04-application-example-docker-uv.md) - Complete Docker + uv application example

@@ -26,38 +26,38 @@ This single principle explains why NumPy uses `>=1.20,<2.0` while your web app u
 
 ### Foundational Concepts
 
-1. **[Application vs Framework vs Library](02-application-framework-library.md)** ⭐ CORE SECTION
+1. **[Application vs Framework vs Library](00-application-framework-library.md)** ⭐ CORE SECTION
    - The fundamental distinction: Who controls the environment?
    - Environment control levels (No/Partial/Full)
    - Testing responsibility and dependency management implications
    - Visual architecture diagrams
 
-2. **[Environment Architecture Layers](03-environment-architecture-layers.md)** ⭐ CORE SECTION
+2. **[Environment Architecture Layers](01-environment-architecture-layers.md)** ⭐ CORE SECTION
    - 6-layer environment stack (Hardware → OS → System → Runtime → Isolation → Dependencies)
    - Library/Framework/Application flexibility strategies per layer
    - Layer separation benefits and anti-patterns
 
 ### Practical Implementation
 
-3. **[Python Environment Tools](04-python-environment-tools.md)** ⭐ CORE SECTION
+3. **[Python Environment Tools](02-python-environment-tools.md)** ⭐ CORE SECTION
    - Modern tool ecosystem with Java architectural comparisons
    - Tool specialization by environment layer
    - Performance considerations (uv 10-100x faster)
    - Anti-patterns to avoid (conda + uv conflicts)
 
-4. **[Library Repository Structure](05-library-repository-structure.md)** ⭐ CORE SECTION
+4. **[Library Repository Structure](03-library-repository-structure.md)** ⭐ CORE SECTION
    - Modern Python library layout (src/ structure)
    - pyproject.toml design with build backends vs project managers
    - uv workflow for library development and publishing
    - Optional dependencies vs dependency-groups
 
-5. **[Server Application Development](06-application-example-docker-uv.md)** ⭐ CORE SECTION
+5. **[Server Application Development](04-application-example-docker-uv.md)** ⭐ CORE SECTION
    - Complete FastAPI application with Docker deployment
    - Conservative dependency ranges and lock files
    - Multi-stage build optimization and layer separation
    - Development workflow and production parity
 
-6. **[Module & Subpackage Design](07-module-subpackage-design.md)**
+6. **[Module & Subpackage Design](05-module-subpackage-design.md)**
    - Good module characteristics and API control with __init__.py
    - Layered dependencies and avoiding circular imports
    - Safe optional dependency handling patterns
@@ -65,13 +65,13 @@ This single principle explains why NumPy uses `>=1.20,<2.0` while your web app u
 
 ### Historical Context
 
-7. **[The Problems - Python's Packaging Pain Points](08-the-problems-python-packaging-pain-points.md)** ⭐ CORE SECTION
+7. **[The Problems - Python's Packaging Pain Points](06-the-problems-python-packaging-pain-points.md)** ⭐ CORE SECTION
    - Five core problems that plagued Python packaging (2000-2016)
    - Multi-language comparison timeline showing Python's delays
    - Real-world pain points and developer horror stories
    - Technical examples of what went wrong
 
-8. **[The Root Causes - Why Python Fell Behind & How It Caught Up](09-the-root-causes-why-python-fell-behind.md)**
+8. **[The Root Causes - Why Python Fell Behind & How It Caught Up](07-the-root-causes-why-python-fell-behind.md)**
    - Deep analysis of leadership, cultural, and technical barriers
    - Community fragmentation and framework philosophy impact
    - The perfect storm that enabled Python's renaissance (2017-2025)
@@ -79,7 +79,7 @@ This single principle explains why NumPy uses `>=1.20,<2.0` while your web app u
 
 ### Modern Tooling
 
-9. **[Python Tools 2025: The Modern Developer's Arsenal](10-the-solutions-modern-python-tools.md)**
+9. **[Python Tools 2025: The Modern Developer's Arsenal](08-the-solutions-modern-python-tools.md)**
     - Strategic tool selection framework and domain-specific stacks
     - Performance revolution: uv (10-100x faster), ruff (100x faster linting)
     - Security & compliance tools: bandit, pip-audit, SBOM generation

@@ -165,5 +165,5 @@ Connecting back to the **Application vs Framework vs Library** concepts, here's 
 
 ---
 
-**Next Section**: [04-python-environment-tools.md](04-python-environment-tools.md) - Python environment tools and patterns
-**Previous Section**: [02-application-framework-library.md](02-application-framework-library.md) - Application vs Framework vs Library
+**Next Section**: [02-python-environment-tools.md](02-python-environment-tools.md) - Python environment tools and patterns
+**Previous Section**: [00-application-framework-library.md](00-application-framework-library.md) - Application vs Framework vs Library
