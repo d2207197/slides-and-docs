@@ -40,7 +40,7 @@ Understanding who controls what in the Python ecosystem is crucial for making ef
    - uv workflow for library development and publishing
    - Optional dependencies vs dependency-groups
 
-6. **[Server Application Development](06-application-example-docker-uv.md)**
+6. **[Server Application Development](06-application-example-docker-uv.md)** ⭐ CORE SECTION
    - Complete FastAPI application with Docker deployment
    - Conservative dependency ranges and lock files
    - Multi-stage build optimization and layer separation
@@ -54,7 +54,7 @@ Understanding who controls what in the Python ecosystem is crucial for making ef
 
 ### Historical Context
 
-8. **[The Problems - Python's Packaging Pain Points](08-the-problems-python-packaging-pain-points.md)**
+8. **[The Problems - Python's Packaging Pain Points](08-the-problems-python-packaging-pain-points.md)** ⭐ CORE SECTION
    - Five core problems that plagued Python packaging (2000-2016)
    - Multi-language comparison timeline showing Python's delays
    - Real-world pain points and developer horror stories
@@ -68,7 +68,7 @@ Understanding who controls what in the Python ecosystem is crucial for making ef
 
 ### Modern Tooling
 
-10. **[Python Tools 2025: The Modern Developer's Arsenal](10-the-solutions-modern-python-tools.md)** ⭐ PRACTICAL GUIDE
+10. **[Python Tools 2025: The Modern Developer's Arsenal](10-the-solutions-modern-python-tools.md)**
     - Strategic tool selection framework and domain-specific stacks
     - Performance revolution: uv (10-100x faster), ruff (100x faster linting)
     - Security & compliance tools: bandit, pip-audit, SBOM generation
