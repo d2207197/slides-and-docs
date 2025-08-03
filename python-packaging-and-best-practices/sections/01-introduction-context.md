@@ -26,10 +26,11 @@ This single principle explains why NumPy uses `>=1.20,<2.0` while your web app u
 
 1. **Why** applications, frameworks, and libraries require different packaging strategies
 2. **How** the 6-layer environment stack (Hardware → OS → System → Runtime → Isolation → Dependencies) works
-3. **Which** modern tools to use for each layer and when (uv, Poetry, Hatch, pip-tools)
+3. **Which** modern tools to use for each layer and when (uv, poetry, ruff, mypy)
 4. **When** to use flexible vs pinned dependencies based on your project type
 5. **How** to structure repositories and modules for maintainability
 6. **Why** Python packaging was broken for 15+ years and how modern tools fixed it
+7. **Which** 2025 tool stack to choose for your specific project type (Library/API/Data Science/CLI/Enterprise)
 
 ## How This Guide Differs
 
@@ -38,8 +39,10 @@ Unlike typical Python packaging tutorials, we:
 1. **Explain the 6-layer architecture** - A unique perspective rarely found elsewhere
 2. **Provide historical context** - Why Python was late and what we learned
 3. **Start with "why" not "how"** - Architecture before tools
-4. **Use Java comparisons** - Leverage existing knowledge
-5. **Focus on modern best practices** - What actually works in 2024+
+4. **Use Java comparisons** - Leverage existing knowledge for dual audience
+5. **Focus on modern best practices** - What actually works in 2025
+6. **Strategic tool selection** - Domain-specific stacks rather than one-size-fits-all
+7. **Performance revolution coverage** - How Rust-based tools changed everything
 
 ## Prerequisites
 
@@ -55,3 +58,7 @@ The journey starts with understanding the fundamental distinction between applic
 
 **Next Section**: [02-application-framework-library.md](02-application-framework-library.md) - The core architectural concepts
 **Duration**: This section ~3 minutes
+
+---
+
+*Last updated: January 2025 - Covers the latest Python tooling revolution including uv, ruff, and modern 2025 best practices*

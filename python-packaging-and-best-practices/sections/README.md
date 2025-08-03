@@ -66,17 +66,20 @@ Understanding who controls what in the Python ecosystem is crucial for making ef
    - The perfect storm that enabled Python's renaissance (2017-2025)
    - Current challenges and future outlook
 
-10. **[The Solutions - Modern Python Tools & Best Practices](10-the-solutions-modern-python-tools.md)**
-    - Tool innovation breakthrough and performance revolution
-    - Modern workflows: Poetry, uv, and best practices
-    - How Python finally caught up to other languages
+### Modern Tooling
 
-### Reference
+10. **[Python Tools 2025: The Modern Developer's Arsenal](10-the-solutions-modern-python-tools.md)** ⭐ PRACTICAL GUIDE
+    - Complete coverage of modern Python development tools
+    - Strategic selection framework and domain-specific recommendations
+    - Security, performance, and build tools for production systems
+    - Migration strategies and future trends
 
-- **[Appendix: Python & Java Tools Reference](appendix-tools-reference.md)**
-   - Side-by-side tool comparison
-   - Quick reference for both ecosystems
-   - Tool selection guide
+10. **[Python Tools 2025: The Modern Developer's Arsenal](10-the-solutions-modern-python-tools.md)**
+    - Strategic tool selection framework and domain-specific stacks
+    - Performance revolution: uv (10-100x faster), ruff (100x faster linting)
+    - Security & compliance tools: bandit, pip-audit, SBOM generation
+    - Python vs Java tooling differences for dual audience
+    - Migration strategies and future trends (Rust-based tools)
 
 ## Navigation
 
@@ -91,9 +94,14 @@ Each section includes:
 2. **Libraries** have minimal control → flexible version ranges
 3. **Frameworks** have partial control → balance stability with extensibility
 4. **Applications** have full control → pin exact versions
-5. **Modern tools** (uv, Ruff) offer 10-100x performance improvements
+5. **Modern tools** (uv, ruff) offer 10-100x performance improvements
 6. **Right tool for right layer** prevents architectural problems
+7. **Domain-specific stacks** optimize for Library/API/Data Science/CLI/Enterprise needs
+8. **Security integration** is essential for modern Python development
+9. **Tool coordination** matters more than individual tool choice
 
 ---
 
-*This presentation helps development teams transition from "just writing Python scripts" to building production-grade Python software with proper dependency management and architectural understanding.*
+*This presentation helps development teams transition from "just writing Python scripts" to building production-grade Python software with proper dependency management, modern tooling, and architectural understanding.*
+
+**Last Updated**: January 2025 - Covers the latest Python tooling revolution and 2025 best practices
