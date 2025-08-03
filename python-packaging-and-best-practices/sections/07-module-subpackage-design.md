@@ -1,4 +1,4 @@
-# Section 06: Module and Subpackage Design
+# Section 07: Module and Subpackage Design
 
 > **Environment Control Focus**: How library code organization impacts downstream environments
 
