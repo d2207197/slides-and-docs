@@ -129,4 +129,4 @@ graph TB
 ---
 
 **Next Section**: [03-environment-architecture-layers.md](03-environment-architecture-layers.md) - 6-layer environment stack
-**Previous Section**: [01-introduction-context.md](01-introduction-context.md) - Introduction & context
+**Previous Section**: [README.md](README.md) - Table of contents and overview
