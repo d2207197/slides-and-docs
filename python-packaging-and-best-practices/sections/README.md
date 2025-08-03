@@ -54,17 +54,22 @@ Understanding who controls what in the Python ecosystem is crucial for making ef
 
 ### Historical Context
 
-8. **[Python Packaging Before the Modern Era](08-python-packaging-before-modern-era.md)**
-   - The Wild West period (2000-2016)
-   - Problems with setup.py approach
-   - Tool proliferation and fragmentation
-   - Why Java developers had it easier
+8. **[The Problems - Python's Packaging Pain Points](08-the-problems-python-packaging-pain-points.md)**
+   - Five core problems that plagued Python packaging (2000-2016)
+   - Multi-language comparison timeline showing Python's delays
+   - Real-world pain points and developer horror stories
+   - Technical examples of what went wrong
 
-9. **[Evolution of Modern Python Tools](09-python-evolution-modern-tools.md)**
-   - The Renaissance period (2016-2024)
-   - Performance revolution and tool consolidation
-   - Modern best practices emergence
-   - Future directions
+9. **[The Root Causes - Why Python Fell Behind & How It Caught Up](09-the-root-causes-why-python-fell-behind.md)**
+   - Deep analysis of leadership, cultural, and technical barriers
+   - Community fragmentation and framework philosophy impact
+   - The perfect storm that enabled Python's renaissance (2017-2025)
+   - Current challenges and future outlook
+
+10. **[The Solutions - Modern Python Tools & Best Practices](10-the-solutions-modern-python-tools.md)**
+    - Tool innovation breakthrough and performance revolution
+    - Modern workflows: Poetry, uv, and best practices
+    - How Python finally caught up to other languages
 
 ### Reference
 
