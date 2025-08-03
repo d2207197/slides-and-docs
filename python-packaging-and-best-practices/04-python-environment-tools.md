@@ -181,13 +181,14 @@ uv add scipy                  # uv can't see conda's numpy → installs wrong ve
 
 For comprehensive tool-by-tool comparisons, ecosystem differences, and migration tips between Python and Java, see:
 
-**📋 [Appendix: Python & Java Tools Side-by-Side Reference](appendix-tools-reference.md)**
+**🛠️ [Chapter 10: Modern Python Tools 2025 - The Complete Developer's Arsenal](10-the-solutions-modern-python-tools.md)**
 
-This detailed reference covers:
-- **13 tool categories**: From environment controllers to performance profiling
-- **Ecosystem differences**: Python vs Java strengths and trade-offs
-- **Migration tips**: For developers switching between ecosystems
-- **Enterprise considerations**: Tool maturity and production readiness
+This comprehensive chapter covers:
+- **Strategic tool selection**: Domain-specific stacks for different use cases
+- **Performance revolution**: uv (10-100x faster), ruff (100x faster linting)
+- **Security & compliance**: bandit, pip-audit, SBOM generation
+- **Python vs Java tooling**: Detailed comparisons for dual-ecosystem developers
+- **Migration strategies**: Moving to modern Rust-based tools
 
 ---
 
