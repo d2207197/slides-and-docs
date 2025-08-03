@@ -69,12 +69,6 @@ Understanding who controls what in the Python ecosystem is crucial for making ef
 ### Modern Tooling
 
 10. **[Python Tools 2025: The Modern Developer's Arsenal](10-the-solutions-modern-python-tools.md)** ⭐ PRACTICAL GUIDE
-    - Complete coverage of modern Python development tools
-    - Strategic selection framework and domain-specific recommendations
-    - Security, performance, and build tools for production systems
-    - Migration strategies and future trends
-
-10. **[Python Tools 2025: The Modern Developer's Arsenal](10-the-solutions-modern-python-tools.md)**
     - Strategic tool selection framework and domain-specific stacks
     - Performance revolution: uv (10-100x faster), ruff (100x faster linting)
     - Security & compliance tools: bandit, pip-audit, SBOM generation
