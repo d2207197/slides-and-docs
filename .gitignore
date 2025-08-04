@@ -39,6 +39,9 @@ site/
 .cursorindexingignore
 .claude/settings.local.json
 
+# Git directory (for submodules or nested repos)
+.git/
+
 # Package manager files (if any tools are used)
 node_modules/
 .npm

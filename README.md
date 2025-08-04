@@ -30,6 +30,18 @@ A comprehensive guide covering modern Python packaging and production deployment
 
 ---
 
+## Documentation Principles
+
+This repository follows "Documentation for Coding Agent Minimalism" - documents serve both human developers and coding agents:
+
+1. **Clear Naming**: File names and titles must be explicit and descriptive
+2. **Concise Length**: Documents should be focused and not overly long
+3. **Clear Structure**: Provide just enough examples; details belong in code, not documentation
+4. **High-Level Principles**: Include principles that both humans and agents can follow
+5. **Effective Index**: This README serves as the index with brief descriptions of each document
+6. **Minimal Agent Config**: CLAUDE.md and similar files remain minimal, referencing this index
+7. **Tool Agnostic**: Documentation is general, not tailored to specific coding agents
+
 ## Contributing
 
 All content is written in open text formats (primarily Markdown) and optimized for AI-assisted development workflows. Feel free to suggest improvements or corrections through issues and pull requests.
