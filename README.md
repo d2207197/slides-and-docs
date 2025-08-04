@@ -45,12 +45,12 @@ This repository follows "Documentation for Coding Agent Minimalism" - documents 
    - Provide just enough examples
    - Details belong in code, not documentation
 
-3. **Shared Principles (Organizational Knowledge)**
-   - Define expected coding style, documentation style, and architecture
+3. **Organizational Knowledge**
+   - Documentation captures and preserves organizational knowledge
    - Emphasize "why" over "what" to reveal reasoning behind key decisions
-   - Capture organizational knowledge that guides both developers and agents
+   - Includes principles, patterns, architectural decisions, and context
    - Must be actively updated as practices and understanding evolve
-   - Serve as the living agreement between human intent and agent behavior
+   - Serves as shared understanding between developers and agents
 
 4. **Tool-Agnostic Minimalism**
    - Documentation is general, not tailored to specific coding agents
