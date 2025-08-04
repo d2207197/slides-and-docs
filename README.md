@@ -34,13 +34,27 @@ A comprehensive guide covering modern Python packaging and production deployment
 
 This repository follows "Documentation for Coding Agent Minimalism" - documents serve both human developers and coding agents:
 
-1. **Clear Naming**: File names and titles must be explicit and descriptive
-2. **Concise Length**: Documents should be focused and not overly long
-3. **Clear Structure**: Provide just enough examples; details belong in code, not documentation
-4. **High-Level Principles**: Include principles that both humans and agents can follow
-5. **Effective Index**: This README serves as the index with brief descriptions of each document
-6. **Minimal Agent Config**: CLAUDE.md and similar files remain minimal, referencing this index
-7. **Tool Agnostic**: Documentation is general, not tailored to specific coding agents
+1. **Clear Organization**
+   - Explicit file names and titles
+   - Well-organized hierarchy with effective navigation
+   - This README serves as the primary index with brief descriptions
+
+2. **Concise Length**
+   - Documents should be focused and not overly long
+   - Provide just enough examples
+   - Details belong in code, not documentation
+
+3. **Shared Principles (Developer-Agent Consensus)**
+   - Define expected coding style, documentation style, and architecture
+   - These principles guide both developers and agents
+   - Must be actively updated as practices evolve
+   - Serve as the living agreement between human intent and agent behavior
+
+4. **Tool-Agnostic Minimalism**
+   - Documentation is general, not tailored to specific coding agents
+   - Agent-specific files (CLAUDE.md, cursor rules) remain minimal
+   - Agent configs reference this index rather than duplicating content
+   - Prefer text-based formats (Mermaid diagrams over images) for universal accessibility
 
 ## Contributing
 
