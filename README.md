@@ -41,13 +41,15 @@ This repository follows "Documentation for Coding Agent Minimalism" - documents 
 
 2. **Concise Length**
    - Documents should be focused and not overly long
+   - Coding agents struggle with lengthy documents (for now)
    - Provide just enough examples
    - Details belong in code, not documentation
 
-3. **Shared Principles (Developer-Agent Consensus)**
+3. **Shared Principles (Organizational Knowledge)**
    - Define expected coding style, documentation style, and architecture
-   - These principles guide both developers and agents
-   - Must be actively updated as practices evolve
+   - Emphasize "why" over "what" to reveal reasoning behind key decisions
+   - Capture organizational knowledge that guides both developers and agents
+   - Must be actively updated as practices and understanding evolve
    - Serve as the living agreement between human intent and agent behavior
 
 4. **Tool-Agnostic Minimalism**
