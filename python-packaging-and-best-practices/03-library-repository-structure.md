@@ -128,12 +128,27 @@ Python packaging involves two distinct tool types that often get confused:
 ```mermaid
 graph LR
     A[uv build] --> B[reads pyproject.toml<br/>build-system section]
-    B --> C[calls hatchling]
-    C --> D[generates .whl/.tar.gz]
-    
+    B --> C{Build Backend}
+
+    C --> D[setuptools]
+    C --> E[poetry-core]
+    C --> F[hatchling]
+    C --> G[pdm-backend]
+
+    D --> H[generates .whl/.tar.gz]
+    E --> H
+    F --> H
+    G --> H
+
+    H --> I{Distribution}
+    I --> J[uv publish<br/>→ PyPI]
+    I --> K["Private Registry<br/>(Artifactory, Nexus)"]
+    I --> L["Git Repository<br/>(GitHub Releases)"]
+
     style A fill:#42a5f5
     style C fill:#ff6b6b
-    style D fill:#66bb6a
+    style H fill:#66bb6a
+    style I fill:#ffa726
 ```
 
 **Key Point**: `uv` is **not** a build tool - it's an interface that calls the actual build backend!
@@ -167,7 +182,7 @@ name = "my-library"
 version = "0.1.0"
 
 [tool.hatch.*]           # Hatchling's configuration
-[tool.setuptools.*]      # Setuptools' configuration  
+[tool.setuptools.*]      # Setuptools' configuration
 [tool.uv.*]              # uv's configuration (development only)
 [tool.poetry.*]          # Poetry's configuration
 ```
@@ -288,7 +303,7 @@ Two standards exist for organizing extra dependencies - this shows how Python pa
 ```toml
 [project.optional-dependencies]
 # For end users - widely supported
-plotting = ["matplotlib>=3.5.0", "seaborn>=0.11.0"] 
+plotting = ["matplotlib>=3.5.0", "seaborn>=0.11.0"]
 
 [dependency-groups]
 # For developers - newer standard, check tool support
@@ -369,7 +384,7 @@ uv run twine check dist/* # Verify packages are valid
 ```bash
 # 1. Update version automatically
 uv version --bump patch      # 0.1.0 → 0.1.1
-uv version --bump minor      # 0.1.1 → 0.2.0  
+uv version --bump minor      # 0.1.1 → 0.2.0
 uv version 1.0.0             # Set exact version
 
 # 2. Build and publish

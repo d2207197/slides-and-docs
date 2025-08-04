@@ -128,3 +128,42 @@ Unlike typical Python packaging tutorials, we:
 *This presentation helps development teams transition from "just writing Python scripts" to building production-grade Python software with proper dependency management, modern tooling, and architectural understanding.*
 
 **Last Updated**: January 2025 - Covers the latest Python tooling revolution and 2025 best practices
+
+## TODO
+
+1. **Coding Agent Friendly Project**
+   - Project structure optimized for AI coding assistants
+   - Documentation patterns that serve both developers and AI agents
+   - Clear module boundaries and API documentation
+   - Standardized file organization for better agent navigation
+   - Shared context files (e.g., CLAUDE.md, PROJECT.md) for consistent understanding
+
+2. **Monorepo**
+   - Python monorepo best practices and tooling
+   - Workspace management with uv workspaces
+   - Shared dependencies and cross-project imports
+
+3. **Private Artifactory Management**
+   - Setting up and configuring private PyPI repositories
+   - Authentication and security best practices
+   - Integration with CI/CD pipelines
+
+4. **Code Quality Practices**
+   - Code quality pyramid (formatting, linting, type checking, testing, documentation)
+   - Modern tooling: Ruff, Black, mypy, pytest
+   - Pre-commit hooks and CI integration
+   - Testing strategies and best practices
+
+5. **Dependency Management Comparison**
+   - requirements.txt vs lock files vs pyproject.toml dependencies
+   - Direct comparison of different approaches
+   - When to use each method
+   - Migration strategies between formats
+
+6. **Project Maturity Progression Matrix**
+   - Evolution from initial prototype to mature project
+   - Tooling progression (manual → semi-automated → fully automated)
+   - Documentation automation (auto-generated API docs, changelog)
+   - Type checking maturity (optional → enforced → CI-integrated)
+   - Testing evolution (basic → comprehensive → property-based)
+   - Ultimate goal: maintaining development efficiency with multiple contributors

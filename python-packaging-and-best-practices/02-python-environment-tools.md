@@ -84,7 +84,7 @@ Applying core principles to specific project types to achieve **optimal tool-pro
 
 | Project Type | Core Challenge | **2024-2025 Recommended** | Alternative Combinations | Technical Rationale |
 |-------------|----------------|---------------------------|-------------------------|---------------------|
-| **🌐 Server Applications** | Production deployment consistency | **🔥 Docker + ⚡ uv** (2 tools) | • **🐳 Podman + ⚡ uv**<br/>• **☁️ Kubernetes + ⚡ uv** | Container handles OS isolation; uv provides 10-100x faster dependency resolution |
+| **🌐 Server Applications** | Production deployment consistency | **🔥 Docker + ⚡ uv** (2 tools) | • **🐳 Podman + ⚡ uv**<br/>• **☁️ Kubernetes + ⚡ uv** | **🔒 Lock files ensure reproducibility** - most critical for server deployments; Container handles OS isolation; uv provides 10-100x faster dependency resolution |
 | **💻 Local Tools** | User installation experience | **⚡ uv** (1 tool) | • **📦 pipx** (single-purpose)<br/>• **🔧 mise + ⚡ uv** (multi-language) | Single binary covers Python versions, virtual environments, and package management |
 | **🔬 Scientific Computing** | C/C++ native dependencies | **🧪 Conda** (1 tool) | • **🔥 Docker + 🧪 Conda**<br/>• **⚡ uv + 🐧 apt** (Linux only) | Pre-compiled binaries for numpy/scipy/PyTorch; avoids complex compilation chains |
 | **📦 Reusable Packages** | Broad compatibility | **⚡ uv** (1 tool) | • **🔨 Hatch** (comprehensive)<br/>• **🎪 PDM** (PEP 582 support) | Built-in multi-Python testing; handles flexible version ranges efficiently |
